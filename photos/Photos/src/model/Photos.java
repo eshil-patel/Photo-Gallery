@@ -1,0 +1,58 @@
+package model;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.AnchorPane;
+import controller.LoginController;
+import java.util.ArrayList;
+import java.util.List;
+import controller.AdminController;
+import controller.NonAdminController;
+
+
+public class Photos extends Application {
+
+	static List<AnchorPane> windows = new ArrayList<AnchorPane>();
+	static int index=2;
+	static AnchorPane root;
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		// TODO Auto-generated method stub
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource("/view/login.fxml"));
+			root = (AnchorPane)loader.load();
+			windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/AdminPage.fxml")));
+			windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/NonAdminPage.fxml")));
+			windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/login.fxml")));
+			windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/openAlbum.fxml")));
+			windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/searchPhotos.fxml")));
+			root.getChildren().add(windows.get(2));
+			LoginController example = loader.getController();
+			example.startList();
+			Scene scene = new Scene(root);
+			primaryStage.setScene(scene);
+			primaryStage.setTitle("LoginPage UI"); 
+			primaryStage.show();
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public static void changePane(int ind) {
+		root.getChildren().clear();
+		index=ind;
+		root.getChildren().add(windows.get(index));
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		launch(args);
+	}
+
+	
+
+}
