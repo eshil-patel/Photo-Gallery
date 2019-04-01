@@ -32,6 +32,9 @@ public class LoginController {
 		if(input.equals("admin")) {
 			Photos.changePane(0);
 		}
+		if(input.equals("stock")) {
+			Photos.changePane(1);
+		}
 		if(users.contains(input)) {
 			Photos.changePane(1);
 			
