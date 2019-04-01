@@ -31,9 +31,12 @@ public class LoginController {
 		String input=username.getText().trim();
 		if(input.equals("admin")) {
 			Photos.changePane(0);
+			// and you got to set all of the stuff for this page as well? so access the fields in nonadmin controller, and do your thing?
 		}
 		if(input.equals("stock")) {
 			Photos.changePane(1);
+			// same idea, have to set the values of the next page
+			// and then have to load images via filepaths
 		}
 		if(users.contains(input)) {
 			Photos.changePane(1);
