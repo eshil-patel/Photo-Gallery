@@ -17,5 +17,8 @@ public class User implements Serializable{
 	public void addAlbum(Album n){
 		Albums.add(n);
 	}
+	public String toString(){
+		return name;
+	}
 	
 }

@@ -26,9 +26,14 @@ public class AdminController {
 	private Button logout;
 	@FXML
 	private TextField newUser;
+	public static UserList ULL;
+	public static void initializeUserList(UserList UL){
+		ULL=UL;
+	}
 	public void createUser() {
 		String name = newUser.getText();
 		User user = new User(name);
+		ULL.addUser(user);
 		try
         {    
             System.out.println("Entered the try condition");
@@ -38,7 +43,7 @@ public class AdminController {
             System.out.println("the filepath was something that was recognized");
             ObjectOutputStream out = new ObjectOutputStream(file);  
             // Method for serialization of object 
-            out.writeObject(user); 
+            out.writeObject(ULL); 
             out.close(); 
             file.close(); 
             System.out.println("Object has been serialized"); 

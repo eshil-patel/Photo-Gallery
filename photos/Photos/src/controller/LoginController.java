@@ -24,18 +24,27 @@ public class LoginController {
 	@FXML
 	private Button loginbutton;
 	//private static ObservableList<User> users = FXCollections.observableArrayList();
-	private static ArrayList<User> users=new ArrayList<User>();
+	public static UserList UL;
 	public static void start() throws FileNotFoundException{
 		try {
-			System.out.println(System.getProperty("user.dir")+File.separator+"src"+File.separator+"model");
 			String pa = System.getProperty("user.dir")+File.separator+"src"+File.separator+"model" + File.separator + "UserData.dat";
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream(pa));
+			System.out.println(pa);
+			FileInputStream FIS = new FileInputStream(pa);
+			System.out.println("FIS CREATED" + FIS.available());
+			if (FIS.available() == 0){
+				UL = new UserList();
+				return;
+			}
+			System.out.println("FIS NOT NULL");
+			ObjectInputStream in = new ObjectInputStream(FIS);
 			System.out.println("after the output stream read");
-	        users = (ArrayList<User>) in.readObject(); 
+	        UL = (UserList) in.readObject(); 
+	        System.out.println(UL.toString());
 	        System.out.println("The deserialzation of the empty list worked");
 	        in.close();
 		}
 		catch(Exception e) {
+//			e.printStackTrace();
 			System.out.println("There was an error deserializing the data");
 		}
 	}
@@ -50,6 +59,7 @@ public class LoginController {
 	public void login()  {
 		String input=username.getText().trim();
 		if(input.equals("admin")) {
+			AdminController.initializeUserList(UL);
 			Photos.changePane(0);
 			// and you got to set all of the stuff for this page as well? so access the fields in nonadmin controller, and do your thing?
 		}
@@ -59,9 +69,6 @@ public class LoginController {
 			// and then have to load images via filepaths
 		}
 		// will need to change the argument for this to match the fact this is an arraylist of users 
-		if(users.contains(input)) {
-			Photos.changePane(1);
-			
-		}
+		
 	}
 }
