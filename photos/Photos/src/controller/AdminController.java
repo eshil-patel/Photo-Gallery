@@ -58,7 +58,7 @@ public class AdminController {
 		
 	}
 	public void logout() {
-		
+		Photos.changePane(2);
 	}
 	public void listUsers() {
 		

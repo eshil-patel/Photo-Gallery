@@ -58,6 +58,7 @@ public class LoginController {
 	}
 	public void login()  {
 		String input=username.getText().trim();
+		username.setText("");
 		if(input.equals("admin")) {
 			AdminController.initializeUserList(UL);
 			Photos.changePane(0);
@@ -68,7 +69,7 @@ public class LoginController {
 			// same idea, have to set the values of the next page
 			// and then have to load images via filepaths
 		}
-		// will need to change the argument for this to match the fact this is an arraylist of users 
+		
 		
 	}
 }
