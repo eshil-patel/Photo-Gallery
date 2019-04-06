@@ -18,5 +18,9 @@ public class UserList implements Serializable{
 	public String toString(){
 		return UL.toString();
 	}
+	public ArrayList<User> getList() {
+		return UL;
+	}
+	
 	
 }
