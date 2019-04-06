@@ -20,5 +20,11 @@ public class User implements Serializable{
 	public String toString(){
 		return name;
 	}
+	public boolean equals(User user) {
+		if(this.name.equals(user.name)) {
+			return true;
+		}
+		return false;
+	}
 	
 }

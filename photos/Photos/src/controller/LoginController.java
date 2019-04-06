@@ -69,7 +69,13 @@ public class LoginController {
 			// same idea, have to set the values of the next page
 			// and then have to load images via filepaths
 		}
-		
+		if(UL.hasUser(input)) {
+			User user=UL.getUser(input);
+			// send in the user, and the userlist 
+			NonAdminController.initialize(UL, user);
+			Photos.changePane(1);
+		}
+		System.out.println("didnt find user");
 		
 	}
 }
