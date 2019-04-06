@@ -1,8 +1,14 @@
 package controller;
+import model.*;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
 public class AdminController {
 	@FXML
@@ -15,4 +21,38 @@ public class AdminController {
 	private ListView<String> userlist;
 	@FXML
 	private Button logout;
+	@FXML
+	private TextField newUser;
+	public void createUser() {
+		String name = newUser.getText();
+		User user = new User(name);
+		try
+        {    
+            System.out.println("Entered the try condition");
+            FileOutputStream file = new FileOutputStream("/model/UserData.dat"); 
+            System.out.println("the filepath was something that was recognized");
+            ObjectOutputStream out = new ObjectOutputStream(file);  
+            // Method for serialization of object 
+            out.writeObject(user); 
+            out.close(); 
+            file.close(); 
+            System.out.println("Object has been serialized"); 
+        } 
+          
+        catch(IOException ex) 
+        { 
+            System.out.println("IOException is caught"); 
+        } 
+	}
+	public void deleteUser() {
+		
+	}
+	public void logout() {
+		
+	}
+	public void listUsers() {
+		
+	}
+	
+	
 }

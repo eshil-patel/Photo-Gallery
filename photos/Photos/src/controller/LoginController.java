@@ -1,9 +1,14 @@
 package controller;
+import model.*;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.Serializable;
+
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,13 +23,26 @@ public class LoginController {
 	private TextField username;
 	@FXML
 	private Button loginbutton;
-	private static ObservableList<String> users = FXCollections.observableArrayList();
+	//private static ObservableList<User> users = FXCollections.observableArrayList();
+	private static ArrayList<User> users=new ArrayList<User>();
+	public static void start() throws FileNotFoundException{
+		try {
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream("/model/UserData.dat"));
+			System.out.println("after the output stream read");
+	        users = (ArrayList<User>) in.readObject(); 
+	        System.out.println("The deserialzation of the empty list worked");
+	        in.close();
+		}
+		catch(Exception e) {
+			System.out.println("There was an error deserializing the data");
+		}
+	}
 	public void startList() throws FileNotFoundException {
 		File file=new File("Userlist.txt");
 		Scanner sc = new Scanner(file);
 		while(sc.hasNextLine()) {
 			String name=sc.nextLine();
-			users.add(name);
+			//users.add(name);
 		}
 	}
 	public void login()  {
@@ -38,6 +56,7 @@ public class LoginController {
 			// same idea, have to set the values of the next page
 			// and then have to load images via filepaths
 		}
+		// will need to change the argument for this to match the fact this is an arraylist of users 
 		if(users.contains(input)) {
 			Photos.changePane(1);
 			

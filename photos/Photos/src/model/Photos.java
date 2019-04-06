@@ -33,7 +33,7 @@ public class Photos extends Application {
 			windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/searchPhotos.fxml")));
 			root.getChildren().add(windows.get(2));
 			LoginController example = loader.getController();
-			example.startList();
+			example.start();
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("LoginPage UI"); 
