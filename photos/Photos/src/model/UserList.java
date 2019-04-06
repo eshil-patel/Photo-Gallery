@@ -32,5 +32,11 @@ public class UserList implements Serializable{
 		User t= new User(name);
 		return UL.get(UL.indexOf(t));
 	}
+	public void deleteUser(String name) {
+		UL.remove(new User(name));
+	}
+	public void deleteUser(User n) {
+		UL.remove(n);
+	}
 	
 }

@@ -26,27 +26,7 @@ public class LoginController {
 	//private static ObservableList<User> users = FXCollections.observableArrayList();
 	public static UserList UL;
 	public static void start() throws FileNotFoundException{
-		try {
-			String pa = System.getProperty("user.dir")+File.separator+"src"+File.separator+"model" + File.separator + "UserData.dat";
-			System.out.println(pa);
-			FileInputStream FIS = new FileInputStream(pa);
-			System.out.println("FIS CREATED" + FIS.available());
-			if (FIS.available() == 0){
-				UL = new UserList();
-				return;
-			}
-			System.out.println("FIS NOT NULL");
-			ObjectInputStream in = new ObjectInputStream(FIS);
-			System.out.println("after the output stream read");
-	        UL = (UserList) in.readObject(); 
-	        System.out.println(UL.toString());
-	        System.out.println("The deserialzation of the empty list worked");
-	        in.close();
-		}
-		catch(Exception e) {
-//			e.printStackTrace();
-			System.out.println("There was an error deserializing the data");
-		}
+		UL = DataSaver.load();
 	}
 	public void startList() throws FileNotFoundException {
 		File file=new File("Userlist.txt");

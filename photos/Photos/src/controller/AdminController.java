@@ -8,7 +8,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -21,7 +25,7 @@ public class AdminController {
 	@FXML
 	private Button deleteuser;
 	@FXML
-	private ListView<String> userlist;
+	private ListView<User> userlist;
 	@FXML
 	private Button logout;
 	@FXML
@@ -32,37 +36,30 @@ public class AdminController {
 	}
 	public void createUser() {
 		String name = newUser.getText();
+		if (name.length() == 0){
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("Name must be non-empty");
+			alert.showAndWait();
+			return;
+		}
 		User user = new User(name);
 		ULL.addUser(user);
-		try
-        {    
-            System.out.println("Entered the try condition");
-            String pa = System.getProperty("user.dir")+File.separator+"src"+File.separator+"model";
-			System.out.println("ADMIN CONT " + pa);
-            FileOutputStream file = new FileOutputStream(pa+File.separator+"UserData.dat"); 
-            System.out.println("the filepath was something that was recognized");
-            ObjectOutputStream out = new ObjectOutputStream(file);  
-            // Method for serialization of object 
-            out.writeObject(ULL); 
-            out.close(); 
-            file.close(); 
-            System.out.println("Object has been serialized"); 
-        } 
-          
-        catch(IOException ex) 
-        { 
-            System.out.println("IOException is caught"); 
-        } 
+		listUsers();
+		DataSaver.save(ULL);
 	}
 	public void deleteUser() {
-		
+		User m = (userlist.getSelectionModel().getSelectedItem());
+		ULL.deleteUser(m);
+		listUsers();
+		DataSaver.save(ULL);
 	}
 	public void logout() {
 		Photos.changePane(2);
 	}
 	public void listUsers() {
-		
+		userlist.setItems(FXCollections.observableArrayList(ULL.getList()));
 	}
+	
 	
 	
 }
