@@ -1,8 +1,11 @@
 package controller;
 import model.*;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javafx.fxml.FXML;
@@ -29,7 +32,9 @@ public class AdminController {
 		try
         {    
             System.out.println("Entered the try condition");
-            FileOutputStream file = new FileOutputStream("/model/UserData.dat"); 
+            String pa = System.getProperty("user.dir")+File.separator+"src"+File.separator+"model";
+			System.out.println("ADMIN CONT " + pa);
+            FileOutputStream file = new FileOutputStream(pa+File.separator+"UserData.dat"); 
             System.out.println("the filepath was something that was recognized");
             ObjectOutputStream out = new ObjectOutputStream(file);  
             // Method for serialization of object 

@@ -27,7 +27,9 @@ public class LoginController {
 	private static ArrayList<User> users=new ArrayList<User>();
 	public static void start() throws FileNotFoundException{
 		try {
-			ObjectInputStream in = new ObjectInputStream(new FileInputStream("/model/UserData.dat"));
+			System.out.println(System.getProperty("user.dir")+File.separator+"src"+File.separator+"model");
+			String pa = System.getProperty("user.dir")+File.separator+"src"+File.separator+"model" + File.separator + "UserData.dat";
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(pa));
 			System.out.println("after the output stream read");
 	        users = (ArrayList<User>) in.readObject(); 
 	        System.out.println("The deserialzation of the empty list worked");
