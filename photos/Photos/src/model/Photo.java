@@ -12,6 +12,10 @@ import java.util.Date;
  *
  */
 public class Photo implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5506513628209394044L;
 	private String path;
 	private ArrayList <Tag> Tags;
 	private Date date;
@@ -30,9 +34,6 @@ public class Photo implements Serializable{
 	public Date getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
 	public String getCaption() {
 		return Caption;
 	}
@@ -40,6 +41,9 @@ public class Photo implements Serializable{
 		Caption = caption;
 	}
 	public void addTags(Tag m){
+		if (Tags.contains(m)){
+			return;
+		}
 		Tags.add(m);
 	}
 }

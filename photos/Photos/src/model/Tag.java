@@ -13,6 +13,10 @@ public class Tag implements Serializable{
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = -2158173759556195914L;
+	/**
+	 * 
+	 */
 	private String name;
 	/**
 	 * 
