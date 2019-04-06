@@ -21,6 +21,16 @@ public class UserList implements Serializable{
 	public ArrayList<User> getList() {
 		return UL;
 	}
-	
+	public boolean hasUser(String name) {
+		User t = new User(name);
+		if (UL.contains(t)) {
+			return true;
+		}
+		return false;
+	}
+	public User getUser(String name) {
+		User t= new User(name);
+		return UL.get(UL.indexOf(t));
+	}
 	
 }
