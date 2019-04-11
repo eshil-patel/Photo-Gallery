@@ -20,8 +20,12 @@ public class User implements Serializable{
 	public String toString(){
 		return name;
 	}
-	public boolean equals(User user) {
-		if(this.name.equals(user.name)) {
+	public boolean equals(Object user) {
+		if (user.getClass() != this.getClass()){
+			return false;
+		}
+		User m = (User)user;
+		if(this.name.equals(m.name)) {
 			return true;
 		}
 		return false;
