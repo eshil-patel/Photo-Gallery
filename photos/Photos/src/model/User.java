@@ -25,6 +25,7 @@ public class User implements Serializable{
 			return false;
 		}
 		User m= (User) user;
+
 		if(this.name.equals(m.name)) {
 			return true;
 		}

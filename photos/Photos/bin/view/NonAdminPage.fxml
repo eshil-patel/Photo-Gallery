@@ -13,9 +13,9 @@
       <Button fx:id="logout" layoutX="508.0" layoutY="398.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="25.0" prefWidth="89.0" text="Logout" />
       <TableView fx:id="table" layoutX="39.0" layoutY="39.0" prefHeight="405.0" prefWidth="447.0">
         <columns>
-          <TableColumn fx:id="name" prefWidth="154.33331298828125" text="C1" />
-          <TableColumn fx:id="numphotos" prefWidth="123.66668701171875" text="C2" />
-          <TableColumn fx:id="dates" prefWidth="168.0" text="C3" />
+          <TableColumn fx:id="name" prefWidth="154.33331298828125" text="Album Name" />
+          <TableColumn fx:id="numphotos" prefWidth="123.66668701171875" text="Number Photos" />
+          <TableColumn fx:id="dates" prefWidth="168.0" text="Date Range" />
         </columns>
       </TableView>
       <Button layoutX="498.0" layoutY="136.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Open Album" />

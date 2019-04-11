@@ -23,7 +23,7 @@ public class UserList implements Serializable{
 	}
 	public boolean hasUser(String name) {
 		User t = new User(name);
-		if (UL.contains(t)) {
+		if (UL.indexOf(t)>-1) {
 			return true;
 		}
 		return false;
