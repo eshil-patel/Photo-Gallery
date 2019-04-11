@@ -7,17 +7,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
-public class AdminController {
+public class AdminController implements Initializable {
 	@FXML
 	private Button listusers;
 	@FXML
@@ -53,11 +58,22 @@ public class AdminController {
 		listUsers();
 		DataSaver.save(ULL);
 	}
-	public void logout() {
+	public void logout() throws IOException {
 		Photos.changePane(2);
 	}
 	public void listUsers() {
 		userlist.setItems(FXCollections.observableArrayList(ULL.getList()));
+	}
+	public void test() {
+		System.out.println("I got into the admin controller");
+	}
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		// TODO Auto-generated method stub
+		if(userlist.equals(null)) {
+			System.out.println("its null bro");
+		}
+		listUsers();
 	}
 	
 	

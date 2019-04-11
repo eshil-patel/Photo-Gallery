@@ -8,6 +8,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.AnchorPane;
 import controller.LoginController;
+
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import controller.AdminController;
@@ -26,12 +29,12 @@ public class Photos extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource("/view/login.fxml"));
 			root = (AnchorPane)loader.load();
-			windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/AdminPage.fxml")));
-			windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/NonAdminPage.fxml")));
-			windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/login.fxml")));
-			windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/openAlbum.fxml")));
-			windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/searchPhotos.fxml")));
-			root.getChildren().add(windows.get(2));
+			//windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/AdminPage.fxml")));
+			//windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/NonAdminPage.fxml")));
+			//windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/login.fxml")));
+			//windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/openAlbum.fxml")));
+			//windows.add((AnchorPane)FXMLLoader.load(getClass().getResource("/view/searchPhotos.fxml")));
+			//root.getChildren().add(windows.get(2));
 			LoginController example = loader.getController();
 			example.start();
 			Scene scene = new Scene(root);
@@ -43,7 +46,7 @@ public class Photos extends Application {
 			e.printStackTrace();
 		}
 	}
-	public static void changePane(int ind) {
+	public static void changePane(int ind) throws IOException {
 		root.getChildren().clear();
 		index=ind;
 		root.getChildren().add(windows.get(index));

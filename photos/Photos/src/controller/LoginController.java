@@ -4,17 +4,27 @@ import model.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.io.Serializable;
 
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Photos;
 
@@ -23,39 +33,61 @@ public class LoginController {
 	private TextField username;
 	@FXML
 	private Button loginbutton;
-	//private static ObservableList<User> users = FXCollections.observableArrayList();
 	public static UserList UL;
-	public static void start() throws FileNotFoundException{
+	public static SwitchPage switchpage;
+	public void start() throws FileNotFoundException{
 		UL = DataSaver.load();
+		switchpage=new SwitchPage();
 	}
-	public void startList() throws FileNotFoundException {
-		File file=new File("Userlist.txt");
-		Scanner sc = new Scanner(file);
-		while(sc.hasNextLine()) {
-			String name=sc.nextLine();
-			//users.add(name);
-		}
-	}
-	public void login()  {
+	public void login(ActionEvent event) throws Exception  {
 		String input=username.getText().trim();
 		username.setText("");
 		if(input.equals("admin")) {
 			AdminController.initializeUserList(UL);
-			Photos.changePane(0);
-			// and you got to set all of the stuff for this page as well? so access the fields in nonadmin controller, and do your thing?
+			switchpage.showScreen("/view/AdminPage.fxml",event);
 		}
-		if(input.equals("stock")) {
-			Photos.changePane(1);
-			// same idea, have to set the values of the next page
-			// and then have to load images via filepaths
+		else if(input.equals("stock")) {
+			User user;
+			if(UL.hasUser("stock")) {
+				user = UL.getUser("stock");
+			}
+			else {
+				user = new User("stock");
+				Album album = new Album("stock");
+				File[] stock = getPhotoLocation();
+				for (File photo:stock) {
+					if(photo.isFile()) {
+						Photo p = new Photo(photo.getAbsolutePath(),photo.lastModified());
+						album.addPhoto(p);
+					}
+				}
+				user.addAlbum(album);
+				UL.addUser(user);
+				DataSaver.save(UL);
+			}
+			NonAdminController.initializePage(UL, user);
+			switchpage.showScreen("/view/NonAdminPage.fxml", event);
 		}
-		if(UL.hasUser(input)) {
+		else if(UL.hasUser(input)) {
 			User user=UL.getUser(input);
-			// send in the user, and the userlist 
-			NonAdminController.initialize(UL, user);
-			Photos.changePane(1);
+			NonAdminController.initializePage(UL, user);
+			switchpage.showScreen("/view/NonAdminPage.fxml", event);
 		}
-		System.out.println("didnt find user");
-		
+		else {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setContentText("The username is not found. Please check spelling or contact an administrator");
+			alert.showAndWait();
+			return;
+		}
+	}
+	public File[] getPhotoLocation() {
+		List<File> filepaths = new ArrayList<File>();
+		String workingDir = System.getProperty("user.dir");
+		String[] edit=workingDir.split("\\\\photos");
+		workingDir=edit[0];
+		String stock=workingDir+"\\StockPhotos";
+		File stockphotos = new File(stock);
+		File[] photos = stockphotos.listFiles();
+		return photos;
 	}
 }

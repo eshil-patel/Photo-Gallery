@@ -22,6 +22,7 @@ public class Photo implements Serializable{
 	private String Caption;
 	public Photo(String path,long longdate){
 		this.path = path;
+		this.date= new Date(longdate);
 		Tags = new ArrayList<Tag>();
 		Caption = null;
 	}
