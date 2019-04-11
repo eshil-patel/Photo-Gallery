@@ -33,6 +33,10 @@ public class LoginController {
 	private TextField username;
 	@FXML
 	private Button loginbutton;
+	@FXML
+	public void onEnter(ActionEvent ae)throws Exception{
+		login(ae);
+	}
 	public static UserList UL;
 	public static SwitchPage switchpage;
 	public void start() throws FileNotFoundException{
