@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -36,8 +37,13 @@ public class AdminController implements Initializable {
 	@FXML
 	private TextField newUser;
 	public static UserList ULL;
+	public static SwitchPage switchpage;
 	public static void initializeUserList(UserList UL){
 		ULL=UL;
+		switchpage=new SwitchPage();
+	}
+	public void logout(ActionEvent event) throws Exception{
+		switchpage.showScreen("/view/login.fxml", event);
 	}
 	public void createUser() {
 		String name = newUser.getText();

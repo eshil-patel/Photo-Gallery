@@ -31,5 +31,8 @@ public class User implements Serializable{
 		}
 		return false;
 	}
+	public ArrayList<Album> getAlbums() {
+		return Albums;
+	}
 	
 }
