@@ -10,7 +10,7 @@
       <Button fx:id="createAlbum" layoutX="498.0" layoutY="39.0" mnemonicParsing="false" text="Create Album" />
       <Button fx:id="deleteAlbum" layoutX="498.0" layoutY="73.0" mnemonicParsing="false" text="Delete Album" />
       <Button fx:id="renameAlbum" layoutX="498.0" layoutY="105.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="89.0" text="Rename Album" />
-      <Button fx:id="logout" layoutX="508.0" layoutY="398.0" mnemonicParsing="false" onMouseClicked="#logout" prefHeight="25.0" prefWidth="89.0" text="Logout" />
+      <Button fx:id="logout" layoutX="508.0" layoutY="398.0" mnemonicParsing="false" onAction="#logout" prefHeight="25.0" prefWidth="89.0" text="Logout" />
       <TableView fx:id="table" layoutX="39.0" layoutY="39.0" prefHeight="405.0" prefWidth="447.0">
         <columns>
           <TableColumn fx:id="name" prefWidth="154.33331298828125" text="Album Name" />

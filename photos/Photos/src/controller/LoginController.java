@@ -58,6 +58,7 @@ public class LoginController {
 				for (File photo:stock) {
 					if(photo.isFile()) {
 						Photo p = new Photo(photo.getAbsolutePath(),photo.lastModified());
+						System.out.println(photo.getAbsolutePath());
 						album.addPhoto(p);
 					}
 				}

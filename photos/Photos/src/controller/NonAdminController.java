@@ -4,6 +4,7 @@ import model.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -35,8 +36,8 @@ public class NonAdminController implements Initializable{
 		user=u;
 		switchpage=new SwitchPage();
 	}
-	public void logout() {
-		
+	public void logout(ActionEvent event) throws Exception {
+		switchpage.showScreen("/view/login.fxml", event);
 	}
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// will have to check if the user doesn't have photos at all!
