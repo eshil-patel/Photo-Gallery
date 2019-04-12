@@ -87,6 +87,7 @@ public class NonAdminController implements Initializable{
 		if(todelete==null) {
 			String text="No album was selected. Please select an album before pressing delete album";
 			showAlert(text);
+			return;
 		}
 		user.removeAlbum(todelete);
 		DataSaver.save(userlist);
