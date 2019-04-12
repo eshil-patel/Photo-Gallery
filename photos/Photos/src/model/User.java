@@ -8,7 +8,7 @@ public class User implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 3742889052001853904L;
-	String name;
+	private String name;
 	ArrayList <Album> Albums;
 	public User(String name){
 		this.name = name;
@@ -34,5 +34,13 @@ public class User implements Serializable{
 	public ArrayList<Album> getAlbums() {
 		return Albums;
 	}
-	
+	public String getName() {
+		return name;
+	}
+	public void removeAlbum(Album album) {
+		Albums.remove(album);
+	}
+	public void renameAlbum(Album album, String newname) {
+		Albums.get(Albums.indexOf(album)).setName(newname);
+	}
 }

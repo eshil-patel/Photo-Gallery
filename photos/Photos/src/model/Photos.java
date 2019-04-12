@@ -39,7 +39,7 @@ public class Photos extends Application {
 			example.start();
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
-			primaryStage.setTitle("LoginPage UI"); 
+			primaryStage.setTitle("Photo Library App"); 
 			primaryStage.show();
 
 		} catch(Exception e) {

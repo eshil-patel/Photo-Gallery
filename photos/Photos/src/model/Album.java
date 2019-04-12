@@ -63,4 +63,7 @@ public class Album implements Serializable{
 	public String getDateRange() {
 		return dateRange;
 	}
+	public void setName(String name) {
+		this.name=name;
+	}
 }
