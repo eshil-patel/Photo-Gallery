@@ -25,7 +25,6 @@ public class User implements Serializable{
 			return false;
 		}
 		User m= (User) user;
-
 		if(this.name.equals(m.name)) {
 			return true;
 		}
@@ -42,5 +41,9 @@ public class User implements Serializable{
 	}
 	public void renameAlbum(Album album, String newname) {
 		Albums.get(Albums.indexOf(album)).setName(newname);
+	}
+	public boolean hasAlbum(String name) {
+		Album album= new Album(name);
+		return Albums.contains(album);
 	}
 }

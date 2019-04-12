@@ -54,8 +54,6 @@ public class NonAdminController implements Initializable{
 		switchpage.showScreen("/view/login.fxml", event);
 	}
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// will have to check if the user doesn't have photos at all!
-		// the inside tells how you are parsing the album argument, and which row gets what!
 		ObservableList<Album> data = FXCollections.observableArrayList(user.getAlbums());
 		name.setCellValueFactory(new PropertyValueFactory<Album, String>("name"));
 		numphotos.setCellValueFactory(new PropertyValueFactory<Album, Integer>("numPhotos"));
@@ -65,6 +63,16 @@ public class NonAdminController implements Initializable{
 	public void createAlbum() {
 		String name = createalbum.getText();
 		createalbum.setText("");
+		if(name.equals("")) {
+			String text ="Please enter a name for your album, then press create album";
+			showAlert(text);
+			return;
+		}
+		if(user.hasAlbum(name)) {
+			String text="This is already the name of an existing album. Please choose a unique name.";
+			showAlert(text);
+			return;
+		}
 		Album newalbum = new Album(name);
 		user.addAlbum(newalbum);
 		DataSaver.save(userlist);
@@ -77,10 +85,8 @@ public class NonAdminController implements Initializable{
 	public void deleteAlbum() {
 		Album todelete = table.getSelectionModel().getSelectedItem();
 		if(todelete==null) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setContentText("No album was selected. Please select an album before pressing delete album");
-			alert.showAndWait();
-			return;
+			String text="No album was selected. Please select an album before pressing delete album";
+			showAlert(text);
 		}
 		user.removeAlbum(todelete);
 		DataSaver.save(userlist);
@@ -89,6 +95,11 @@ public class NonAdminController implements Initializable{
 	public void renameAlbum() {
 		Album torename=table.getSelectionModel().getSelectedItem();
 		String newname = renamealbum.getText();
+		if(newname.equals("") || torename==null) {
+			String text="Please select an album, and type a new name before pressing rename album";
+			showAlert(text);
+			return;
+		}
 		renamealbum.setText("");
 		user.renameAlbum(torename, newname);  
 		DataSaver.save(userlist);
@@ -98,9 +109,8 @@ public class NonAdminController implements Initializable{
 	public void openAlbum(ActionEvent event) throws Exception {
 		Album album=table.getSelectionModel().getSelectedItem();
 		if(album==null) {
-			Alert alert = new Alert(AlertType.WARNING);
-			alert.setContentText("No album was selected. Please select an album before pressing open album");
-			alert.showAndWait();
+			String text="No album was selected. Please select an album before pressing open album";
+			showAlert(text);
 			return;
 		}
 		OpenAlbumController.initializeAlbum(userlist, album,user);
@@ -109,5 +119,11 @@ public class NonAdminController implements Initializable{
 	public void searchPhotos(ActionEvent event) throws Exception {
 		SearchPhotosController.initializeAlbums(userlist, user.getAlbums(),user);
 		switchpage.showScreen("/view/searchPhotos.fxml", event);
+	}
+	public void showAlert(String text) {
+		Alert alert = new Alert(AlertType.WARNING);
+		alert.setContentText(text);
+		alert.showAndWait();
+		return;
 	}
 }

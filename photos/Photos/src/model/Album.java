@@ -66,4 +66,11 @@ public class Album implements Serializable{
 	public void setName(String name) {
 		this.name=name;
 	}
+	public boolean equals(Object a) {
+		if(a==null ||!(a instanceof Album)) {
+			return false;
+		}
+		Album album= (Album) a;
+		return album.getName().equals(this.name);
+	}
 }
