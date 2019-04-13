@@ -1,6 +1,7 @@
 package controller;
 
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -11,7 +12,11 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,7 +24,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 import model.Album;
 import model.Photo;
 import model.Tag;
@@ -32,6 +43,8 @@ public class OpenAlbumController implements Initializable{
 	public static SwitchPage switchpage;
 	public static User user;
 	private int currentImg;
+	private int startImg;
+	private int endImg;
 	@FXML
 	private Button back;
 	@FXML
@@ -48,6 +61,10 @@ public class OpenAlbumController implements Initializable{
 	private Button copyAlbumButton;
 	@FXML
 	private Button moveAlbumButton;
+	@FXML
+	private Button addPhotosButton;
+	@FXML
+	private Button removePhotosButton;
 	@FXML
 	private GridPane grid;
 	@FXML
@@ -76,24 +93,47 @@ public class OpenAlbumController implements Initializable{
 		switchpage=new SwitchPage();
 
 	}
+	//UPDATES THE GRID IMAGES
 	public void loadImages() throws FileNotFoundException{
 		System.out.println(album.getPhotos().get(1).getPath());
 		int j = 0;
-		for (Photo i: album.getPhotos()){
+		ArrayList <Photo> temp = new ArrayList<Photo>();
+		if (album.getNumPhotos() <= 6){
+			temp = album.getPhotos();
+		}else{
+			for (int it = startImg; it <= endImg; it++){
+				if (it >= album.getNumPhotos()){
+					break;
+				}
+				temp.add(album.getPhotos().get(it));
+			}
+		}
+		for (Photo i: temp){
 			System.out.println(i.getPath());
 			FileInputStream inputstream = new FileInputStream(i.getPath());
 			Image img = new Image(inputstream);
 			double dh = 90;
+			double dw = 150;
 			double rat = img.getWidth()/img.getHeight();
 			
 			ImageView imgView = new ImageView(img);
-			imgView.setFitHeight(dh);
-			imgView.setFitWidth(dh*rat);
+			if (dw/dh < rat){
+				imgView.setFitWidth(dw);
+				imgView.setFitHeight(dw/rat);
+			}else{
+				imgView.setFitHeight(dh);
+				imgView.setFitWidth(dh*rat);
+			}
 			System.out.println(j/2 + " " + j % 2);
-			System.out.println(dh + " " + dh*rat);
+			System.out.println(imgView.getFitHeight() + " " + imgView.getFitWidth());
 			grid.add(imgView,j%2, j/2);
 			j++;
 		}
+		for (Node i: grid.getChildren()){
+			GridPane.setHalignment(i, HPos.CENTER);
+			GridPane.setValignment(i, VPos.CENTER);
+		}
+		grid.setGridLinesVisible(true);
 		displayImg();
 	}
 	public void nextImg(ActionEvent event) throws FileNotFoundException {
@@ -103,6 +143,12 @@ public class OpenAlbumController implements Initializable{
 			currentImg--;
 			return;
 		}
+		if (currentImg > endImg){
+			startImg = startImg + 2;
+			endImg = endImg +2;
+			grid.getChildren().clear();
+		}
+		loadImages();
 		displayImg();
 	}
 	public void prevImg(ActionEvent event) throws FileNotFoundException {
@@ -112,6 +158,13 @@ public class OpenAlbumController implements Initializable{
 			currentImg++;
 			return;
 		}
+		if (currentImg < startImg){
+			System.out.println(currentImg + " " + startImg);
+			startImg = startImg - 2;
+			endImg = endImg - 2;
+			grid.getChildren().clear();
+		}
+		loadImages();
 		displayImg();
 	}
 	//UPDATES IMAGE VIEW AND ALSO SAVES DATA!!
@@ -179,11 +232,38 @@ public class OpenAlbumController implements Initializable{
 	public void moveAlbum(ActionEvent event){
 		
 	}
+	public void addPhotos(ActionEvent event) throws FileNotFoundException{
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Open Resource File");
+
+		Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+		File file = fileChooser.showOpenDialog(window);
+		fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
+		if (file == null){
+			showAlert("No file entered!");
+			return;
+		}
+		System.out.println(file.getName());
+		System.out.println(file.getAbsolutePath());
+		String fp = file.getAbsolutePath();
+		System.out.println(fp);
+		Photo n = new Photo(fp, file.lastModified());
+		album.addPhoto(n);
+		loadImages();
+		displayImg();
+	}
+	public void removePhotos(ActionEvent event) throws FileNotFoundException{
+		album.removePhoto(currentImg);
+		loadImages();
+		displayImg();
+	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		try {
 			currentImg = 0;
+			startImg = 0;
+			endImg = 5;
 			loadImages();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

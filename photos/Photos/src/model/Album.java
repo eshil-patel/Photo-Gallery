@@ -32,6 +32,11 @@ public class Album implements Serializable{
 		numPhotos--;
 		updateDates();
 	}
+	public void removePhoto(int d){
+		Photos.remove(d);
+		numPhotos--;
+		updateDates();
+	}
 	private void updateDates(){
 		if (Photos.size() == 0){
 			minDate = null;

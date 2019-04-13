@@ -63,6 +63,16 @@ public class Photo implements Serializable{
 		}
 		return false;
 	}
+	public boolean equals(Object a) {		
+		if (a.getClass() != this.getClass()){
+			return false;
+		}
+		Photo b = (Photo)a;
+		if(b.path.equals(this.path)){
+			return true;
+		}
+		return false;
+	}
 	public void setDate(String text) {
 		// TODO Auto-generated method stub
 		date = new Date(text);
