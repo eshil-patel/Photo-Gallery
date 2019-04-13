@@ -55,10 +55,18 @@ public class Tag implements Serializable{
 	public void setValue(String value) {
 		this.value = value;
 	}
-	public boolean equals(Tag d){
-		if (this.name.equals(d.name) && this.value.equals(d.value)){
+	
+	public boolean equals(Object a) {		
+		if (a.getClass() != this.getClass()){
+			return false;
+		}
+		Tag b = (Tag)a;
+		if (this.name.equals(b.name) && this.value.equals(b.value)){
 			return true;
 		}
 		return false;
+	}
+	public String toString(){
+		return ("(" + this.name+ ", " + this.value+")");
 	}
 }

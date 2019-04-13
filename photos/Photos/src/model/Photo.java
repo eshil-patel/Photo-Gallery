@@ -47,4 +47,24 @@ public class Photo implements Serializable{
 		}
 		Tags.add(m);
 	}
+	public void removeTags(Tag m){
+		if (!(Tags.contains(m))){
+			return;
+		}
+		Tags.remove(m);
+	}
+	
+	public ArrayList<Tag> getTags() {
+		return Tags;
+	}
+	public boolean hasTag(Tag m){
+		if (Tags.contains(m)){
+			return true;
+		}
+		return false;
+	}
+	public void setDate(String text) {
+		// TODO Auto-generated method stub
+		date = new Date(text);
+	}
 }

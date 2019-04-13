@@ -73,4 +73,7 @@ public class Album implements Serializable{
 		Album album= (Album) a;
 		return album.getName().equals(this.name);
 	}
+	public ArrayList<Photo> getPhotos() {
+		return Photos;
+	}
 }

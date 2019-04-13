@@ -3,60 +3,49 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OpenAlbumController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="525.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OpenAlbumController">
    <children>
-      <GridPane gridLinesVisible="true" layoutX="26.0" layoutY="142.0" prefHeight="174.0" prefWidth="297.0">
+      <GridPane fx:id="grid" alignment="CENTER" gridLinesVisible="true" layoutX="26.0" layoutY="142.0" prefHeight="300.0" prefWidth="297.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <ImageView fitHeight="60.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../Pictures/nature-tree-green-pine.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="73.0" fitWidth="91.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-               <image>
-                  <Image url="@../../../../Pictures/nature-3048299__340.jpg" />
-               </image>
-            </ImageView>
-         </children>
       </GridPane>
       <Button layoutX="96.0" layoutY="59.0" mnemonicParsing="false" text="Add Photos" />
       <Button layoutX="198.0" layoutY="59.0" mnemonicParsing="false" text="Remove Photo" />
-      <Button layoutX="352.0" layoutY="343.0" mnemonicParsing="false" text="Caption/Recaption" />
-      <ImageView fitHeight="174.0" fitWidth="214.0" layoutX="354.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../Pictures/nature-3048299__340.jpg" />
-         </image>
-      </ImageView>
+      <Button fx:id="captionButton" layoutX="352.0" layoutY="343.0" mnemonicParsing="false" onAction="#caption" prefHeight="25.0" prefWidth="117.0" text="Caption/Recaption" />
       <Label layoutX="354.0" layoutY="315.0" prefHeight="17.0" prefWidth="37.0" text="Tags:" />
       <Label layoutX="354.0" layoutY="279.0" text="Caption: " />
       <Label layoutX="354.0" layoutY="298.0" prefHeight="17.0" prefWidth="37.0" text="Date: " />
-      <Button layoutX="352.0" layoutY="377.0" mnemonicParsing="false" text="Add Tags" />
-      <Button layoutX="352.0" layoutY="410.0" mnemonicParsing="false" text="Remove Tags" />
-      <TextField layoutX="484.0" layoutY="343.0" prefHeight="25.0" prefWidth="91.0" />
-      <TextField layoutX="484.0" layoutY="377.0" prefHeight="25.0" prefWidth="91.0" />
-      <TextField layoutX="484.0" layoutY="410.0" prefHeight="25.0" prefWidth="91.0" />
-      <Button layoutX="392.0" layoutY="238.0" mnemonicParsing="false" text="Previous" />
-      <Button layoutX="484.0" layoutY="238.0" mnemonicParsing="false" text="Next" />
-      <Button layoutX="352.0" layoutY="445.0" mnemonicParsing="false" text="Copy to album" />
-      <TextField layoutX="484.0" layoutY="445.0" prefHeight="25.0" prefWidth="91.0" />
-      <Button layoutX="352.0" layoutY="480.0" mnemonicParsing="false" text="Move to album" />
-      <TextField layoutX="484.0" layoutY="480.0" prefHeight="25.0" prefWidth="91.0" />
-      <Button fx:id="back" layoutX="44.0" layoutY="468.0" mnemonicParsing="false" onAction="#back" text="Back" />
+      <Button fx:id="addTagButton" layoutX="352.0" layoutY="377.0" mnemonicParsing="false" onAction="#addTag" prefHeight="25.0" prefWidth="117.0" text="Add Tags" />
+      <Button fx:id="removeTagButton" layoutX="352.0" layoutY="410.0" mnemonicParsing="false" onAction="#removeTag" prefHeight="25.0" prefWidth="117.0" text="Remove Tags" />
+      <TextField fx:id="captionText" layoutX="484.0" layoutY="343.0" onAction="#caption" prefHeight="25.0" prefWidth="91.0" />
+      <TextField fx:id="addTagText1" layoutX="484.0" layoutY="389.0" prefHeight="25.0" prefWidth="41.0" />
+      <TextField fx:id="addTagText2" layoutX="530.0" layoutY="388.0" onAction="#addTag" prefHeight="25.0" prefWidth="41.0" />
+      <Button fx:id="prev" layoutX="392.0" layoutY="238.0" mnemonicParsing="false" onAction="#prevImg" text="Previous" />
+      <Button fx:id="next" layoutX="484.0" layoutY="238.0" mnemonicParsing="false" onAction="#nextImg" text="Next" />
+      <Button fx:id="copyAlbumButton" layoutX="352.0" layoutY="445.0" mnemonicParsing="false" onAction="#copyAlbum" prefHeight="25.0" prefWidth="117.0" text="Copy to album" />
+      <TextField fx:id="copyAlbumText" layoutX="484.0" layoutY="445.0" onAction="#copyAlbum" prefHeight="25.0" prefWidth="91.0" />
+      <Button fx:id="moveAlbumButton" layoutX="352.0" layoutY="480.0" mnemonicParsing="false" onAction="#moveAlbum" prefHeight="25.0" prefWidth="117.0" text="Move to album" />
+      <TextField fx:id="moveAlbumText" layoutX="484.0" layoutY="480.0" onAction="#moveAlbum" prefHeight="25.0" prefWidth="91.0" />
+      <Button fx:id="back" layoutX="44.0" layoutY="468.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="66.0" text="Back" />
+      <ImageView fx:id="dispImg" fitHeight="160.0" fitWidth="214.0" layoutX="361.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="captionLabel" layoutX="409.0" layoutY="279.0" />
+      <Label fx:id="dateLabel" layoutX="409.0" layoutY="298.0" />
+      <Label fx:id="tagsLabel" layoutX="409.0" layoutY="315.0" />
+      <Label layoutX="491.0" layoutY="412.0" text="Name" />
+      <Label layoutX="537.0" layoutY="411.0" text="Value" />
    </children>
 </AnchorPane>
