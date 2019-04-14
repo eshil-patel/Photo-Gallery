@@ -95,9 +95,11 @@ public class OpenAlbumController implements Initializable{
 	}
 	//UPDATES THE GRID IMAGES
 	public void loadImages() throws FileNotFoundException{
-		System.out.println(album.getPhotos().get(1).getPath());
 		int j = 0;
 		ArrayList <Photo> temp = new ArrayList<Photo>();
+		if (currentImg == -1 && album.getNumPhotos() != 0){
+			currentImg = 0;
+		}
 		if (album.getNumPhotos() <= 6){
 			temp = album.getPhotos();
 		}else{
@@ -133,8 +135,9 @@ public class OpenAlbumController implements Initializable{
 			GridPane.setHalignment(i, HPos.CENTER);
 			GridPane.setValignment(i, VPos.CENTER);
 		}
-		grid.setGridLinesVisible(true);
-		displayImg();
+		if (currentImg != -1){
+			displayImg();
+		}
 	}
 	public void nextImg(ActionEvent event) throws FileNotFoundException {
 		currentImg++;
@@ -261,7 +264,7 @@ public class OpenAlbumController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		try {
-			currentImg = 0;
+			currentImg = -1;
 			startImg = 0;
 			endImg = 5;
 			loadImages();
