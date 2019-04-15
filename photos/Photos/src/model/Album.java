@@ -1,6 +1,8 @@
 package model;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -52,11 +54,15 @@ public class Album implements Serializable{
 			if (d.getDate().compareTo(minDate)<0){
 				minDate = d.getDate();
 			}
-			if (d.getDate().compareTo(maxDate)>1){
+			if (d.getDate().compareTo(maxDate)>0){
 				maxDate = d.getDate();
 			}
 		}
-		dateRange = minDate.toString().concat("+").concat(maxDate.toString());
+		SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+		String min=format.format(minDate);
+		String max=format.format(maxDate);
+		//dateRange = minDate.toString().concat("+").concat(maxDate.toString());
+		dateRange=min.concat("-").concat(max);
 		
 	}
 	public String getName() {
@@ -80,5 +86,43 @@ public class Album implements Serializable{
 	}
 	public ArrayList<Photo> getPhotos() {
 		return Photos;
+	}
+	public ArrayList<Photo> getPhotosByDate(Date start,Date end) throws ParseException{
+		ArrayList<Photo> output=new ArrayList<Photo>();
+		for (Photo p: Photos) {
+			if(p.getDate().compareTo(start)>=0 && p.getDate().compareTo(end)<=0) {
+				output.add(p);
+			}
+		}
+		return output;
+	}
+	public ArrayList<Photo> getPhotosByTag(String t1,String v1){
+		ArrayList<Photo> output = new ArrayList<Photo>();
+		Tag tag = new Tag(t1,v1);
+		for(Photo p:Photos) {
+			if(p.getTags().contains(tag)) {
+				output.add(p);
+			}
+		}
+		return output;
+	}
+	public ArrayList<Photo> getPhotosByTag(String t1, String v1, String t2, String v2, String comp){
+		ArrayList<Photo> output = new ArrayList<Photo>();
+		Tag tag1=new Tag(t1,v1);
+		Tag tag2=new Tag(t2,v2);
+		for(Photo p:Photos) {
+			ArrayList<Tag> tags = p.getTags();
+			if(comp.equals("or")) {
+				if(tags.contains(tag1) || tags.contains(tag2)) {
+					output.add(p);
+				}
+			}
+			else {
+				if(tags.contains(tag1) && tags.contains(tag2)) {
+					output.add(p);
+				}
+			}
+		}
+		return output;
 	}
 }
