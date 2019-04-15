@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -85,7 +86,8 @@ public class OpenAlbumController implements Initializable{
 	private TextField copyAlbumText;
 	@FXML
 	private TextField moveAlbumText;
-	
+	@FXML
+	private ScrollPane scrollpane;
 	public static void initializeAlbum(UserList UL,Album a,User u) {
 		ULL=UL;
 		album=a;
@@ -100,6 +102,7 @@ public class OpenAlbumController implements Initializable{
 		if (currentImg == -1 && album.getNumPhotos() != 0){
 			currentImg = 0;
 		}
+		/**
 		if (album.getNumPhotos() <= 6){
 			temp = album.getPhotos();
 		}else{
@@ -110,6 +113,8 @@ public class OpenAlbumController implements Initializable{
 				temp.add(album.getPhotos().get(it));
 			}
 		}
+		**/
+		temp=album.getPhotos();
 		for (Photo i: temp){
 			System.out.println(i.getPath());
 			FileInputStream inputstream = new FileInputStream(i.getPath());
@@ -135,6 +140,7 @@ public class OpenAlbumController implements Initializable{
 			GridPane.setHalignment(i, HPos.CENTER);
 			GridPane.setValignment(i, VPos.CENTER);
 		}
+		scrollpane.setContent(grid);
 		if (currentImg != -1){
 			displayImg();
 		}
