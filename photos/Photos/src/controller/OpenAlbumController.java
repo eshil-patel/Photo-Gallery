@@ -9,6 +9,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,8 +23,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -88,12 +93,25 @@ public class OpenAlbumController implements Initializable{
 	private TextField moveAlbumText;
 	@FXML
 	private ScrollPane scrollpane;
+	@FXML
+	private TableView<Tag> tagList;
+	@FXML 
+	private TableColumn<Tag,String> nameCol;
+	@FXML
+	private TableColumn<Tag,String> valueCol;
 	public static void initializeAlbum(UserList UL,Album a,User u) {
 		ULL=UL;
 		album=a;
 		user=u;
 		switchpage=new SwitchPage();
-
+	}
+	public void loadTags(){
+		if (album.getNumPhotos()!=0 && currentImg < album.getNumPhotos()){
+			ObservableList<Tag> data = FXCollections.observableArrayList(album.getPhotos().get(currentImg).getTags());
+			nameCol.setCellValueFactory(new PropertyValueFactory<Tag, String>("name"));
+			valueCol.setCellValueFactory(new PropertyValueFactory<Tag, String>("value"));
+			tagList.setItems(data);
+		}
 	}
 	//UPDATES THE GRID IMAGES
 	public void loadImages() throws FileNotFoundException{
@@ -102,6 +120,7 @@ public class OpenAlbumController implements Initializable{
 		int j = 0;
 		ArrayList <Photo> temp = new ArrayList<Photo>();
 		temp=album.getPhotos();
+		grid.getChildren().removeAll(grid.getChildren());
 		for (Photo i: temp){
 			System.out.println(i.getPath());
 			FileInputStream inputstream = new FileInputStream(i.getPath());
@@ -139,11 +158,6 @@ public class OpenAlbumController implements Initializable{
 			currentImg--;
 			return;
 		}
-		if (currentImg > endImg){
-			startImg = startImg + 2;
-			endImg = endImg +2;
-			grid.getChildren().clear();
-		}
 		loadImages();
 		displayImg();
 	}
@@ -154,12 +168,6 @@ public class OpenAlbumController implements Initializable{
 			currentImg++;
 			return;
 		}
-		if (currentImg < startImg){
-			System.out.println(currentImg + " " + startImg);
-			startImg = startImg - 2;
-			endImg = endImg - 2;
-			grid.getChildren().clear();
-		}
 		loadImages();
 		displayImg();
 	}
@@ -167,14 +175,19 @@ public class OpenAlbumController implements Initializable{
 	public void displayImg() throws FileNotFoundException{
 		System.out.println(currentImg);
 		System.out.println(album.toString());
-		Photo i = album.getPhotos().get(currentImg);
-		FileInputStream inputstream = new FileInputStream(i.getPath());
-		Image img = new Image(inputstream);
-		dispImg.setImage(img);
-		captionLabel.setText(i.getCaption());
-		dateLabel.setText(i.getDate().toString());
-		tagsLabel.setText(i.getTags().toString());
+		System.out.println(album.getNumPhotos());
+		dispImg.setImage(null);
+		if (album.getNumPhotos() != 0 && currentImg < album.getNumPhotos()){
+			loadTags();
+			Photo i = album.getPhotos().get(currentImg);
+			FileInputStream inputstream = new FileInputStream(i.getPath());
+			Image img = new Image(inputstream);
+			dispImg.setImage(img);
+			captionLabel.setText(i.getCaption());
+			dateLabel.setText(i.getDate().toString());
+		}
 		DataSaver.save(ULL);
+		
 		
 	}
 	public void back(ActionEvent event) throws Exception {
@@ -241,6 +254,7 @@ public class OpenAlbumController implements Initializable{
 			copyAlbumText.setText("");
 			try {
 				displayImg();
+				loadImages();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -248,7 +262,31 @@ public class OpenAlbumController implements Initializable{
 		}
 	}
 	public void moveAlbum(ActionEvent event){
-		
+		if (currentImg == -1){
+			showAlert("No image available");
+			return;
+		}
+		String albumName = moveAlbumText.getText();
+		if (!user.hasAlbum(albumName)){
+			showAlert("No Such Album!");
+			return;
+		}else{ 
+			Photo i = album.getPhotos().get(currentImg);
+			album.removePhoto(currentImg);
+			Album j = user.getAlbum(albumName);
+			j.addPhoto(i);
+			moveAlbumText.setText("");
+			if (currentImg == album.getNumPhotos()){
+				currentImg--;
+			}
+			try {
+				displayImg();
+				loadImages();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	public void addPhotos(ActionEvent event) throws FileNotFoundException{
 		FileChooser fileChooser = new FileChooser();
