@@ -97,6 +97,8 @@ public class OpenAlbumController implements Initializable{
 	}
 	//UPDATES THE GRID IMAGES
 	public void loadImages() throws FileNotFoundException{
+	System.out.println(currentImg);
+	System.out.println(album.toString());
 		int j = 0;
 		ArrayList <Photo> temp = new ArrayList<Photo>();
 		temp=album.getPhotos();
@@ -163,6 +165,8 @@ public class OpenAlbumController implements Initializable{
 	}
 	//UPDATES IMAGE VIEW AND ALSO SAVES DATA!!
 	public void displayImg() throws FileNotFoundException{
+		System.out.println(currentImg);
+		System.out.println(album.toString());
 		Photo i = album.getPhotos().get(currentImg);
 		FileInputStream inputstream = new FileInputStream(i.getPath());
 		Image img = new Image(inputstream);
@@ -267,7 +271,14 @@ public class OpenAlbumController implements Initializable{
 		displayImg();
 	}
 	public void removePhotos(ActionEvent event) throws FileNotFoundException{
+		if (album.getNumPhotos() == 0){
+			showAlert("No photos to remove!");
+			return;
+		}
 		album.removePhoto(currentImg);
+		if (currentImg != 0){
+			currentImg--;
+		}
 		loadImages();
 		displayImg();
 	}

@@ -10,6 +10,6 @@
       <Text layoutX="58.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" wrappingWidth="56.136749267578125" />
       <Text layoutX="125.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Photo Library App" wrappingWidth="130.80331420898438" />
       <Button fx:id="loginbutton" layoutX="167.0" layoutY="199.0" mnemonicParsing="false" onAction="#login" text="Login" />
-      <TextField fx:id="username" layoutX="136.0" layoutY="142.0" onAction="#login" prefHeight="25.0" prefWidth="131.0" />
+      <TextField fx:id="username" layoutX="136.0" layoutY="142.0" onAction="#onEnter" prefHeight="25.0" prefWidth="131.0" />
    </children>
 </AnchorPane>

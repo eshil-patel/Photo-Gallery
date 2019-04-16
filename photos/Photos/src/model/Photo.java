@@ -84,4 +84,7 @@ public class Photo implements Serializable{
 		// TODO Auto-generated method stub
 		date = new Date(text);
 	}
+	public String toString(){
+		return this.getPath();
+	}
 }

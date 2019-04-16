@@ -125,4 +125,7 @@ public class Album implements Serializable{
 		}
 		return output;
 	}
+	public String toString(){
+		return(Photos.toString());
+	}
 }
