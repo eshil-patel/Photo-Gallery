@@ -97,23 +97,10 @@ public class OpenAlbumController implements Initializable{
 	}
 	//UPDATES THE GRID IMAGES
 	public void loadImages() throws FileNotFoundException{
+	System.out.println(currentImg);
+	System.out.println(album.toString());
 		int j = 0;
 		ArrayList <Photo> temp = new ArrayList<Photo>();
-		if (currentImg == -1 && album.getNumPhotos() != 0){
-			currentImg = 0;
-		}
-		/**
-		if (album.getNumPhotos() <= 6){
-			temp = album.getPhotos();
-		}else{
-			for (int it = startImg; it <= endImg; it++){
-				if (it >= album.getNumPhotos()){
-					break;
-				}
-				temp.add(album.getPhotos().get(it));
-			}
-		}
-		**/
 		temp=album.getPhotos();
 		for (Photo i: temp){
 			System.out.println(i.getPath());
@@ -178,6 +165,8 @@ public class OpenAlbumController implements Initializable{
 	}
 	//UPDATES IMAGE VIEW AND ALSO SAVES DATA!!
 	public void displayImg() throws FileNotFoundException{
+		System.out.println(currentImg);
+		System.out.println(album.toString());
 		Photo i = album.getPhotos().get(currentImg);
 		FileInputStream inputstream = new FileInputStream(i.getPath());
 		Image img = new Image(inputstream);
@@ -236,7 +225,27 @@ public class OpenAlbumController implements Initializable{
 		}
 	}
 	public void copyAlbum(ActionEvent event){
-		
+		if (currentImg == -1){
+			showAlert("No image available");
+			return;
+		}
+		String albumName = copyAlbumText.getText();
+		if (!user.hasAlbum(albumName)){
+			showAlert("No Such Album!");
+			return;
+		}else{ 
+			Photo ii = album.getPhotos().get(currentImg);
+			Photo i = new Photo(ii.getPath(), ii.getDate());
+			Album j = user.getAlbum(albumName);
+			j.addPhoto(i);
+			copyAlbumText.setText("");
+			try {
+				displayImg();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	public void moveAlbum(ActionEvent event){
 		
@@ -262,7 +271,14 @@ public class OpenAlbumController implements Initializable{
 		displayImg();
 	}
 	public void removePhotos(ActionEvent event) throws FileNotFoundException{
+		if (album.getNumPhotos() == 0){
+			showAlert("No photos to remove!");
+			return;
+		}
 		album.removePhoto(currentImg);
+		if (currentImg != 0){
+			currentImg--;
+		}
 		loadImages();
 		displayImg();
 	}
@@ -271,6 +287,9 @@ public class OpenAlbumController implements Initializable{
 		// TODO Auto-generated method stub
 		try {
 			currentImg = -1;
+			if (album.getNumPhotos() > 0){
+				currentImg = 0;
+			}
 			startImg = 0;
 			endImg = 5;
 			loadImages();

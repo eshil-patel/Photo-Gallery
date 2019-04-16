@@ -19,7 +19,7 @@ import javafx.scene.control.TableColumn;
 
 public class NonAdminController implements Initializable{
 	@FXML 
-	private Button createAlbum;
+	private Button createAlbumButton;
 	@FXML
 	private Button deleteAlbum;
 	@FXML
@@ -39,7 +39,7 @@ public class NonAdminController implements Initializable{
 	@FXML 
 	private TableColumn<Album,String> dates;
 	@FXML
-	private TextField createalbum;
+	private TextField createAlbumText;
 	@FXML
 	private TextField renamealbum;
 	public static UserList userlist;
@@ -61,8 +61,8 @@ public class NonAdminController implements Initializable{
 		table.setItems(data);
 	}
 	public void createAlbum() {
-		String name = createalbum.getText();
-		createalbum.setText("");
+		String name = createAlbumText.getText();
+		createAlbumText.setText("");
 		if(name.equals("")) {
 			String text ="Please enter a name for your album, then press create album";
 			showAlert(text);

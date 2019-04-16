@@ -49,6 +49,14 @@ public class User implements Serializable{
 		Album album= new Album(name);
 		return Albums.contains(album);
 	}
+	public Album getAlbum(String name){
+		Album n = new Album(name);
+		return Albums.get(Albums.indexOf(n));
+	}
+	public void addPhoto(String albumName, Photo i){
+		Album aN = getAlbum(albumName);
+		aN.addPhoto(i);
+	}
 	public ArrayList<Photo> getPhotosByDate(String start,String end) throws ParseException{
 		ArrayList<Photo> output=new ArrayList<Photo>();
 		Date s=new SimpleDateFormat("MM/dd/yyyy").parse(start);
