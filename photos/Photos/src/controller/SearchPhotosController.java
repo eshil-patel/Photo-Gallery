@@ -61,6 +61,7 @@ public class SearchPhotosController {
 	public static UserList userlist;
 	public static SwitchPage switchpage;
 	public static User user;
+	public static ArrayList<Photo> newAlbum;
 	public static void initializeAlbums(UserList UL,ArrayList<Album> a, User u) {
 		userlist=UL;
 		albums=a;
@@ -85,6 +86,7 @@ public class SearchPhotosController {
 			return;
 		}
 		ArrayList<Photo> photosBySearch=user.getPhotosByDate(start, end);
+		newAlbum=photosBySearch;
 		setGridpane(photosBySearch);
 	}
 	private boolean areDates(String[] input) {
@@ -106,10 +108,10 @@ public class SearchPhotosController {
 		return;
 	}
 	public void searchByTag() throws FileNotFoundException {
-		String t1=tag1.getText();
-		String v1=val1.getText();
-		String t2=tag2.getText();
-		String v2=val2.getText();
+		String t1=tag1.getText().trim();
+		String v1=val1.getText().trim();
+		String t2=tag2.getText().trim();
+		String v2=val2.getText().trim();
 		tag1.setText("");
 		tag2.setText("");
 		val1.setText("");
@@ -121,7 +123,7 @@ public class SearchPhotosController {
 		}
 		else if(t2.equals("") && t2.equals("")) {
 			searchResults=user.getPhotosByTag(t1, v1);
-		}
+			}
 		else if(!(t1.equals(""))||!(v1.equals(""))||!(t2.equals(""))||!(v2.equals(""))) {
 			boolean isOr=or.isSelected();
 			boolean isAnd=and.isSelected();
@@ -140,16 +142,18 @@ public class SearchPhotosController {
 			if(isAnd) {
 				searchResults=user.getPhotosByTag(t1, v1, t2, v2, "and");
 			}
-			setGridpane(searchResults);
+			newAlbum=searchResults;
 		}
 		else {
 			showAlert("Please make sure to enter in all relevant fields for tag 2 and value 2");
 			return;
 		}
-		
+		newAlbum=searchResults;
+		setGridpane(searchResults);
 	}
 	
 	public void setGridpane(ArrayList<Photo> searchResults) throws FileNotFoundException {
+		grid.getChildren().removeAll(grid.getChildren());
 		System.out.println(searchResults.size());
 		int j=0;
 		for (Photo i: searchResults){
@@ -177,5 +181,23 @@ public class SearchPhotosController {
 			GridPane.setValignment(i, VPos.CENTER);
 		}
 		scrollpane.setContent(grid);
+	}
+	public void createAlbum() {
+		System.out.println("got in here and now im in buisness");
+		String albumName=albumname.getText();
+		Album album = new Album(albumName);
+		if(user.getAlbums().contains(album)) {
+			showAlert("Duplicate name");
+			return;
+		}
+		for(Photo p:newAlbum) {
+			album.addPhoto(p);
+		}
+		if(album.getPhotos()==null) {
+			showAlert("This is a blank album");
+			return;
+		}
+		user.addAlbum(album);
+		DataSaver.save(userlist);
 	}
 }
