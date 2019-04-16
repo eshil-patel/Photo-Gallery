@@ -28,7 +28,7 @@
       <Label layoutX="113.0" layoutY="54.0" text="Date Begin" />
       <Label layoutX="113.0" layoutY="89.0" text="Date End" />
       <Button fx:id="searchbytag" layoutX="161.0" layoutY="333.0" mnemonicParsing="false" onMouseClicked="#searchByTag" text="Search by Tag" />
-      <Button fx:id="createalbum" layoutX="331.0" layoutY="247.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="92.0" text="Create Album" />
+      <Button fx:id="createalbum" layoutX="331.0" layoutY="247.0" mnemonicParsing="false" onMouseClicked="#createAlbum" prefHeight="25.0" prefWidth="92.0" text="Create Album" />
       <TextField fx:id="albumname" layoutX="431.0" layoutY="247.0" prefHeight="25.0" prefWidth="106.0" />
       <Button fx:id="back" layoutX="484.0" layoutY="333.0" mnemonicParsing="false" onAction="#back" text="Back" />
       <Text layoutX="114.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter dates as mm/dd/yyyy" wrappingWidth="186.33334177732468" />
