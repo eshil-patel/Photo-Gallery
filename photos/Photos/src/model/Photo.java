@@ -27,6 +27,12 @@ public class Photo implements Serializable{
 		Tags = new ArrayList<Tag>();
 		Caption = null;
 	}
+	public Photo(String path, Date date){
+		this.path = path;
+		this.date= date;
+		Tags = new ArrayList<Tag>();
+		Caption = null;
+	}
 	public String getPath() {
 		return path;
 	}
