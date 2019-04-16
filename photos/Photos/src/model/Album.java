@@ -16,11 +16,15 @@ public class Album implements Serializable{
 	private String dateRange;
 	
 	ArrayList <Photo> Photos;
+	ArrayList <String> presetTagNames;
 	Date minDate;
 	Date maxDate;
 	public Album(String name) {
 		this.name = name;
 		Photos = new ArrayList<Photo>();
+		presetTagNames = new ArrayList<String>();
+		presetTagNames.add("Location");
+		presetTagNames.add("Person");
 		numPhotos=0;
 		dateRange = "";
 	}
@@ -127,5 +131,14 @@ public class Album implements Serializable{
 	}
 	public String toString(){
 		return(Photos.toString());
+	}
+	public ArrayList<String> getPresetTagNames() {
+		return presetTagNames;
+	}
+	public void addPresetTagName(String presetTagName) {
+		presetTagNames.add(presetTagName);
+	}
+	public void deletePresetTagName(String presetTagName) {
+		presetTagNames.remove(presetTagName);
 	}
 }

@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -12,36 +13,36 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="578.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OpenAlbumController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPress" prefHeight="630.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OpenAlbumController">
    <children>
-      <Button fx:id="addPhotosButton" layoutX="96.0" layoutY="59.0" mnemonicParsing="false" onAction="#addPhotos" text="Add Photos" />
-      <Button fx:id="removePhotosButton" layoutX="198.0" layoutY="59.0" mnemonicParsing="false" onAction="#removePhotos" text="Remove Photo" />
+      <Button fx:id="addPhotosButton" layoutX="98.0" layoutY="42.0" mnemonicParsing="false" onAction="#addPhotos" text="Add Photos" />
+      <Button fx:id="removePhotosButton" layoutX="198.0" layoutY="42.0" mnemonicParsing="false" onAction="#removePhotos" text="Remove Photo" />
       <Button fx:id="captionButton" layoutX="352.0" layoutY="381.0" mnemonicParsing="false" onAction="#caption" prefHeight="25.0" prefWidth="117.0" text="Caption/Recaption" />
-      <Label layoutX="444.0" layoutY="257.0" prefHeight="17.0" prefWidth="37.0" text="Tags" />
-      <Label layoutX="350.0" layoutY="223.0" text="Caption: " />
-      <Label layoutX="350.0" layoutY="242.0" prefHeight="17.0" prefWidth="37.0" text="Date: " />
-      <Button fx:id="addTagButton" layoutX="352.0" layoutY="415.0" mnemonicParsing="false" onAction="#addTag" prefHeight="25.0" prefWidth="117.0" text="Add Tags" />
-      <Button fx:id="removeTagButton" layoutX="352.0" layoutY="448.0" mnemonicParsing="false" onAction="#removeTag" prefHeight="25.0" prefWidth="117.0" text="Remove Tags" />
-      <TextField fx:id="captionText" layoutX="484.0" layoutY="381.0" onAction="#caption" prefHeight="25.0" prefWidth="91.0" />
-      <TextField fx:id="addTagText1" layoutX="484.0" layoutY="427.0" prefHeight="25.0" prefWidth="41.0" />
-      <TextField fx:id="addTagText2" layoutX="530.0" layoutY="426.0" onAction="#addTag" prefHeight="25.0" prefWidth="41.0" />
-      <Button fx:id="prev" layoutX="392.0" layoutY="192.0" mnemonicParsing="false" onAction="#prevImg" text="Previous" />
-      <Button fx:id="next" layoutX="484.0" layoutY="192.0" mnemonicParsing="false" onAction="#nextImg" text="Next" />
-      <Button fx:id="copyAlbumButton" layoutX="352.0" layoutY="483.0" mnemonicParsing="false" onAction="#copyAlbum" prefHeight="25.0" prefWidth="117.0" text="Copy to album" />
-      <TextField fx:id="copyAlbumText" layoutX="484.0" layoutY="483.0" onAction="#copyAlbum" prefHeight="25.0" prefWidth="91.0" />
-      <Button fx:id="moveAlbumButton" layoutX="352.0" layoutY="518.0" mnemonicParsing="false" onAction="#moveAlbum" prefHeight="25.0" prefWidth="117.0" text="Move to album" />
-      <TextField fx:id="moveAlbumText" layoutX="484.0" layoutY="518.0" onAction="#moveAlbum" prefHeight="25.0" prefWidth="91.0" />
-      <Button fx:id="back" layoutX="30.0" layoutY="496.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="66.0" text="Back" />
-      <ImageView fx:id="dispImg" fitHeight="160.0" fitWidth="214.0" layoutX="361.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="captionLabel" layoutX="405.0" layoutY="223.0" />
-      <Label fx:id="dateLabel" layoutX="405.0" layoutY="242.0" />
-      <Label layoutX="491.0" layoutY="450.0" text="Name" />
-      <Label layoutX="537.0" layoutY="449.0" text="Value" />
-      <ScrollPane fx:id="scrollpane" layoutX="10.0" layoutY="91.0" prefHeight="360.0" prefWidth="323.0" vbarPolicy="ALWAYS">
+      <Label layoutX="157.0" layoutY="349.0" prefHeight="17.0" prefWidth="30.0" text="Tags" />
+      <Label layoutX="357.0" layoutY="301.0" text="Caption: " />
+      <Label layoutX="357.0" layoutY="320.0" prefHeight="17.0" prefWidth="37.0" text="Date: " />
+      <Button fx:id="addTagButton" layoutX="353.0" layoutY="522.0" mnemonicParsing="false" onAction="#addTag" prefHeight="25.0" prefWidth="117.0" text="Add Tags" />
+      <Button fx:id="removeTagButton" layoutX="353.0" layoutY="555.0" mnemonicParsing="false" onAction="#removeTag" prefHeight="25.0" prefWidth="117.0" text="Remove Tags" />
+      <TextField fx:id="captionText" layoutX="484.0" layoutY="381.0" onAction="#caption" prefHeight="25.0" prefWidth="136.0" />
+      <TextField fx:id="addTagText1" layoutX="485.0" layoutY="534.0" prefHeight="25.0" prefWidth="66.0" />
+      <TextField fx:id="addTagText2" layoutX="555.0" layoutY="534.0" onAction="#addTag" prefHeight="25.0" prefWidth="66.0" />
+      <Button fx:id="prev" layoutX="399.0" layoutY="270.0" mnemonicParsing="false" onAction="#prevImg" text="Previous" />
+      <Button fx:id="next" layoutX="491.0" layoutY="270.0" mnemonicParsing="false" onAction="#nextImg" text="Next" />
+      <Button fx:id="copyAlbumButton" layoutX="352.0" layoutY="418.0" mnemonicParsing="false" onAction="#copyAlbum" prefHeight="25.0" prefWidth="117.0" text="Copy to album" />
+      <TextField fx:id="copyAlbumText" layoutX="484.0" layoutY="418.0" onAction="#copyAlbum" prefHeight="25.0" prefWidth="136.0" />
+      <Button fx:id="moveAlbumButton" layoutX="352.0" layoutY="453.0" mnemonicParsing="false" onAction="#moveAlbum" prefHeight="25.0" prefWidth="117.0" text="Move to album" />
+      <TextField fx:id="moveAlbumText" layoutX="484.0" layoutY="453.0" onAction="#moveAlbum" prefHeight="25.0" prefWidth="136.0" />
+      <Button fx:id="back" layoutX="14.0" layoutY="42.0" mnemonicParsing="false" onAction="#back" prefHeight="25.0" prefWidth="66.0" text="Back" />
+      <ImageView fx:id="dispImg" fitHeight="225.0" fitWidth="301.0" layoutX="361.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="captionLabel" layoutX="412.0" layoutY="301.0" />
+      <Label fx:id="dateLabel" layoutX="412.0" layoutY="320.0" />
+      <Label layoutX="504.0" layoutY="560.0" text="Name" />
+      <Label layoutX="574.0" layoutY="560.0" text="Value" />
+      <ScrollPane fx:id="scrollpane" layoutX="10.0" layoutY="91.0" prefHeight="251.0" prefWidth="323.0" vbarPolicy="ALWAYS">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <GridPane fx:id="grid" alignment="CENTER" gridLinesVisible="true" layoutX="4.0" layoutY="2.0" prefHeight="350.0" prefWidth="300.0">
+                  <GridPane fx:id="grid" alignment="CENTER" gridLinesVisible="true" layoutX="4.0" layoutY="2.0" prefHeight="263.0" prefWidth="300.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0" />
@@ -50,18 +51,22 @@
                     <rowConstraints>
                       <RowConstraints minHeight="120.0" prefHeight="120.0" vgrow="NEVER" />
                       <RowConstraints minHeight="120.0" prefHeight="120.0" vgrow="NEVER" />
-                      <RowConstraints minHeight="120.0" prefHeight="120.0" vgrow="NEVER" />
                     </rowConstraints>
                   </GridPane>
                </children>
             </AnchorPane>
         </content>
       </ScrollPane>
-      <TableView fx:id="tagList" layoutX="354.0" layoutY="274.0" prefHeight="97.0" prefWidth="237.0">
+      <TableView fx:id="tagList" layoutX="53.0" layoutY="366.0" prefHeight="97.0" prefWidth="233.0">
         <columns>
-          <TableColumn fx:id="nameCol" prefWidth="98.0" text="Name" />
-          <TableColumn fx:id="valueCol" minWidth="0.0" prefWidth="102.0" text="Value" />
+          <TableColumn fx:id="nameCol" prefWidth="124.0" text="Name" />
+          <TableColumn fx:id="valueCol" minWidth="0.0" prefWidth="106.0" text="Value" />
         </columns>
       </TableView>
+      <ListView fx:id="tagNames" layoutX="72.0" layoutY="484.0" onMouseClicked="#fillTagName" prefHeight="70.0" prefWidth="200.0" />
+      <Label layoutX="141.0" layoutY="468.0" prefHeight="17.0" prefWidth="66.0" text="Tag Options" />
+      <TextField fx:id="addPresetTagText" layoutX="181.0" layoutY="561.0" onAction="#addPresetTag" prefHeight="25.0" prefWidth="91.0" />
+      <Button fx:id="addPresetTagButton" layoutX="72.0" layoutY="561.0" mnemonicParsing="false" onAction="#addPresetTag" text="Add Preset Tag" />
+      <Button fx:id="deletePresetTagButton" layoutX="89.0" layoutY="591.0" mnemonicParsing="false" onAction="#deletePresetTag" prefHeight="25.0" prefWidth="171.0" text="Delete Selected Preset Tag" />
    </children>
 </AnchorPane>

@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -22,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -32,6 +34,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
@@ -49,8 +52,6 @@ public class OpenAlbumController implements Initializable{
 	public static SwitchPage switchpage;
 	public static User user;
 	private int currentImg;
-	private int startImg;
-	private int endImg;
 	@FXML
 	private Button back;
 	@FXML
@@ -99,20 +100,26 @@ public class OpenAlbumController implements Initializable{
 	private TableColumn<Tag,String> nameCol;
 	@FXML
 	private TableColumn<Tag,String> valueCol;
+	@FXML
+	private ListView<String> tagNames;
+	@FXML
+	private TextField addPresetTagText;
+	@FXML
+	private Button addPresetTagButton;
+	@FXML
+	private Button deletePresetTagButton;
+	@FXML public void fillTagName(MouseEvent arg0){
+		addTagText1.setText(tagNames.getSelectionModel().getSelectedItem());
+	}
+	@FXML public void 
+	
 	public static void initializeAlbum(UserList UL,Album a,User u) {
 		ULL=UL;
 		album=a;
 		user=u;
 		switchpage=new SwitchPage();
 	}
-	public void loadTags(){
-		if (album.getNumPhotos()!=0 && currentImg < album.getNumPhotos()){
-			ObservableList<Tag> data = FXCollections.observableArrayList(album.getPhotos().get(currentImg).getTags());
-			nameCol.setCellValueFactory(new PropertyValueFactory<Tag, String>("name"));
-			valueCol.setCellValueFactory(new PropertyValueFactory<Tag, String>("value"));
-			tagList.setItems(data);
-		}
-	}
+	
 	//UPDATES THE GRID IMAGES
 	public void loadImages() throws FileNotFoundException{
 	System.out.println(currentImg);
@@ -206,6 +213,9 @@ public class OpenAlbumController implements Initializable{
 		}
 	}
 	public void addTag(ActionEvent event){
+		if (addTagText1.getText().length()==0 || addTagText2.getText().length()==0 ){
+			showAlert("Tag values must be non-null!");
+		}
 		Tag t = new Tag(addTagText1.getText(),addTagText2.getText());
 		if (album.getPhotos().get(currentImg).hasTag(t)){
 			showAlert("Already has those tags");
@@ -247,8 +257,7 @@ public class OpenAlbumController implements Initializable{
 			showAlert("No Such Album!");
 			return;
 		}else{ 
-			Photo ii = album.getPhotos().get(currentImg);
-			Photo i = new Photo(ii.getPath(), ii.getDate());
+			Photo i = album.getPhotos().get(currentImg);
 			Album j = user.getAlbum(albumName);
 			j.addPhoto(i);
 			copyAlbumText.setText("");
@@ -320,6 +329,50 @@ public class OpenAlbumController implements Initializable{
 		loadImages();
 		displayImg();
 	}
+	
+	public void loadTags(){
+		if (album.getNumPhotos()!=0 && currentImg < album.getNumPhotos()){
+			ObservableList<Tag> data = FXCollections.observableArrayList(album.getPhotos().get(currentImg).getTags());
+			nameCol.setCellValueFactory(new PropertyValueFactory<Tag, String>("name"));
+			valueCol.setCellValueFactory(new PropertyValueFactory<Tag, String>("value"));
+			tagList.setItems(data);
+		}
+	}
+	public void loadPresetTags(){
+		ObservableList<String> list = FXCollections.observableArrayList(album.getPresetTagNames());
+		tagNames.setItems(list);
+	}
+	public void addPresetTag(ActionEvent event){
+		if(addPresetTagText.getText().isEmpty()){
+			showAlert("Tag name must be nonempty!");
+			return;
+		}
+		if (album.getPresetTagNames().contains(addPresetTagText.getText())){
+			showAlert("Add unique tag name!");
+			return;
+		}
+		album.addPresetTagName(addPresetTagText.getText());
+		loadPresetTags();
+		addPresetTagText.setText("");
+		try {
+			displayImg();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	public void deletePresetTag(ActionEvent event){
+		if (!tagNames.getSelectionModel().getSelectedItem().isEmpty()){
+			album.deletePresetTagName(tagNames.getSelectionModel().getSelectedItem());
+			loadPresetTags();
+			try {
+				displayImg();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -328,8 +381,7 @@ public class OpenAlbumController implements Initializable{
 			if (album.getNumPhotos() > 0){
 				currentImg = 0;
 			}
-			startImg = 0;
-			endImg = 5;
+			loadPresetTags();
 			loadImages();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
