@@ -22,6 +22,10 @@ public class Photos extends Application {
 	static List<AnchorPane> windows = new ArrayList<AnchorPane>();
 	static int index=2;
 	static AnchorPane root;
+	/* (non-Javadoc)
+	 * starts up the application, initializing the login page for user to use 
+	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
@@ -46,11 +50,9 @@ public class Photos extends Application {
 			e.printStackTrace();
 		}
 	}
-	public static void changePane(int ind) throws IOException {
-		root.getChildren().clear();
-		index=ind;
-		root.getChildren().add(windows.get(index));
-	}
+	/**starts the application
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		launch(args);
