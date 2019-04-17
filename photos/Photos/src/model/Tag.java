@@ -10,20 +10,12 @@ import java.io.Serializable;
  *
  */
 public class Tag implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2158173759556195914L;
-	/**
-	 * 
-	 */
-	private String name;
-	/**
-	 * 
-	 */
-	private String value;
 	
-	/**
+	private static final long serialVersionUID = -2158173759556195914L;
+	
+	private String name;
+	private String value;
+	/**Constructor for Tag
 	 * @param name
 	 * @param value
 	 */
@@ -31,31 +23,35 @@ public class Tag implements Serializable{
 		this.name = name;
 		this.value = value;
 	}
-	/**
+	/** get name of tag 
 	 * @return
 	 */
 	public String getName() {
 		return name;
 	}
-	/**
+	/**set name of tag
 	 * @param name
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-	/**
+	/**Get value of tag 
 	 * @return
 	 */
 	public String getValue() {
 		return value;
 	}
-	/**
+	/**set value of tag 
 	 * @param value
 	 */
 	public void setValue(String value) {
 		this.value = value;
 	}
 	
+	/* (non-Javadoc)
+	 * custom equals method for tags 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	public boolean equals(Object a) {		
 		if (a.getClass() != this.getClass()){
 			return false;
@@ -66,6 +62,10 @@ public class Tag implements Serializable{
 		}
 		return false;
 	}
+	/* (non-Javadoc)
+	 * custom toString for tags 
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString(){
 		return ("(" + this.name+ ", " + this.value+")");
 	}

@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class UserList implements Serializable{
-	/**
+	/**Constructor for Userlist 
 	 * 
 	 */
 	private static final long serialVersionUID = 2546262621080163608L;
@@ -15,15 +15,29 @@ public class UserList implements Serializable{
 	public UserList(){
 		UL = new ArrayList<User>();
 	}
+	/** Add user into the user list 
+	 * @param m User object 
+	 */
 	public void addUser(User m){
 		UL.add(m);
 	}
+	/* (non-Javadoc)
+	 * custom toString method
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString(){
 		return UL.toString();
 	}
+	/**get list of users in data file 
+	 * @return
+	 */
 	public ArrayList<User> getList() {
 		return UL;
 	}
+	/**check if the userlist contains this user 
+	 * @param name- Name of user 
+	 * @return
+	 */
 	public boolean hasUser(String name) {
 		User t = new User(name);
 		if (UL.indexOf(t)>-1) {
@@ -31,13 +45,23 @@ public class UserList implements Serializable{
 		}
 		return false;
 	}
+	/**get user from the list of users 
+	 * @param name Name of user 
+	 * @return
+	 */
 	public User getUser(String name) {
 		User t= new User(name);
 		return UL.get(UL.indexOf(t));
 	}
+	/**delete the user from the userlist 
+	 * @param name name of user 
+	 */
 	public void deleteUser(String name) {
 		UL.remove(new User(name));
 	}
+	/**alternate delete user from the userlist 
+	 * @param n User object 
+	 */
 	public void deleteUser(User n) {
 		UL.remove(n);
 	}
