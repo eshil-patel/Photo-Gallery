@@ -210,15 +210,23 @@ public class SearchPhotosController {
 	public void createAlbum() {
 //		System.out.println("got in here and now im in buisness");
 		String albumName=albumname.getText();
+		if(albumName==null){
+			showAlert("No name given");
+			return;
+		}
 		Album album = new Album(albumName);
 		if(user.getAlbums().contains(album)) {
 			showAlert("Duplicate name");
 			return;
 		}
+		if(newAlbum==null) {
+			showAlert("this has nothing in it");
+			return;
+		}
 		for(Photo p:newAlbum) {
 			album.addPhoto(p);
 		}
-		if(album.getPhotos()==null) {
+		if(album.getPhotos().size()==0) {
 			showAlert("This is a blank album");
 			return;
 		}
