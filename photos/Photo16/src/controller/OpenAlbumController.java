@@ -130,14 +130,14 @@ public class OpenAlbumController implements Initializable{
 	 * @throws FileNotFoundException
 	 */
 	public void loadImages() throws FileNotFoundException{
-	System.out.println(currentImg);
-	System.out.println(album.toString());
+//	System.out.println(currentImg);
+//	System.out.println(album.toString());
 		int j = 0;
 		ArrayList <Photo> temp = new ArrayList<Photo>();
 		temp=album.getPhotos();
 		grid.getChildren().removeAll(grid.getChildren());
 		for (Photo i: temp){
-			System.out.println(i.getPath());
+//			System.out.println(i.getPath());
 			FileInputStream inputstream = new FileInputStream(i.getPath());
 			Image img = new Image(inputstream);
 			double dh = 90;
@@ -152,8 +152,8 @@ public class OpenAlbumController implements Initializable{
 				imgView.setFitHeight(dh);
 				imgView.setFitWidth(dh*rat);
 			}
-			System.out.println(j/2 + " " + j % 2);
-			System.out.println(imgView.getFitHeight() + " " + imgView.getFitWidth());
+//			System.out.println(j/2 + " " + j % 2);
+//			System.out.println(imgView.getFitHeight() + " " + imgView.getFitWidth());
 			grid.add(imgView,j%2, j/2);
 			j++;
 		}
@@ -173,9 +173,9 @@ public class OpenAlbumController implements Initializable{
 	 * @throws FileNotFoundException
 	 */
 	public void displayImg() throws FileNotFoundException{
-		System.out.println(currentImg);
-		System.out.println(album.toString());
-		System.out.println(album.getNumPhotos());
+//		System.out.println(currentImg);
+//		System.out.println(album.toString());
+//		System.out.println(album.getNumPhotos());
 		dispImg.setImage(null);
 		if (album.getNumPhotos() != 0 && currentImg < album.getNumPhotos()){
 			loadTags();
@@ -361,10 +361,10 @@ public class OpenAlbumController implements Initializable{
 			showAlert("No file entered!");
 			return;
 		}
-		System.out.println(file.getName());
-		System.out.println(file.getAbsolutePath());
+//		System.out.println(file.getName());
+//		System.out.println(file.getAbsolutePath());
 		String fp = file.getAbsolutePath();
-		System.out.println(fp);
+//		System.out.println(fp);
 		Photo n = new Photo(fp, file.lastModified());
 		album.addPhoto(n);
 		loadImages();

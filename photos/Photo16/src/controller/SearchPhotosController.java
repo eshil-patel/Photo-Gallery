@@ -81,7 +81,7 @@ public class SearchPhotosController {
 	 * @throws FileNotFoundException
 	 */
 	public void searchByDate() throws ParseException, FileNotFoundException {
-		System.out.println("Got into the method im testing");
+//		System.out.println("Got into the method im testing");
 		String start=startDate.getText();
 		String end=endDate.getText();
 		startDate.setText("");
@@ -150,7 +150,7 @@ public class SearchPhotosController {
 				return;
 			}
 			if(!(isOr) && !(isAnd) && !(t2.equals("")) && !(v2.equals(""))) {
-				System.out.println(t2);
+//				System.out.println(t2);
 				showAlert("Please select or/and as the search method");
 				return;
 			}
@@ -176,7 +176,7 @@ public class SearchPhotosController {
 	 */
 	public void setGridpane(ArrayList<Photo> searchResults) throws FileNotFoundException {
 		grid.getChildren().removeAll(grid.getChildren());
-		System.out.println(searchResults.size());
+//		System.out.println(searchResults.size());
 		int j=0;
 		for (Photo i: searchResults){
 			FileInputStream inputstream = new FileInputStream(i.getPath());
@@ -193,8 +193,8 @@ public class SearchPhotosController {
 				imgView.setFitHeight(dh);
 				imgView.setFitWidth(dh*rat);
 			}
-			System.out.println(j/2 + " " + j % 2);
-			System.out.println(imgView.getFitHeight() + " " + imgView.getFitWidth());
+//			System.out.println(j/2 + " " + j % 2);
+//			System.out.println(imgView.getFitHeight() + " " + imgView.getFitWidth());
 			grid.add(imgView,j%2, j/2);
 			j++;
 		}
@@ -208,7 +208,7 @@ public class SearchPhotosController {
 	 * 
 	 */
 	public void createAlbum() {
-		System.out.println("got in here and now im in buisness");
+//		System.out.println("got in here and now im in buisness");
 		String albumName=albumname.getText();
 		Album album = new Album(albumName);
 		if(user.getAlbums().contains(album)) {
