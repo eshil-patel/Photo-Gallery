@@ -1,6 +1,0 @@
-Eshil
-<<<<<<< HEAD
-Imrhan
-=======
-Imrhan
->>>>>>> 3f1fbc62da9a66042e0ac892f7d29d56b469b9d0
