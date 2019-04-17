@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPress" prefHeight="630.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OpenAlbumController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OpenAlbumController">
    <children>
       <Button fx:id="addPhotosButton" layoutX="98.0" layoutY="42.0" mnemonicParsing="false" onAction="#addPhotos" text="Add Photos" />
       <Button fx:id="removePhotosButton" layoutX="198.0" layoutY="42.0" mnemonicParsing="false" onAction="#removePhotos" text="Remove Photo" />

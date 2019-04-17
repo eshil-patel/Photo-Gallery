@@ -10,6 +10,11 @@ import java.io.ObjectOutputStream;
 import model.UserList;
 
 public class DataSaver {
+	/**
+	 * This method is dedicated to serializing the UserList object and saves to disk using the Serializable interface
+	 * @param ULL A UserList object consisting of all the users -> primary object that permeates through all other controllers and is also the object being serialized. Consists of all application information.
+	 *
+	 */
 	public static void save(UserList ULL){
 		try
         {    
@@ -31,6 +36,10 @@ public class DataSaver {
             System.out.println("IOException is caught"); 
         } 
 	}
+	/**
+	 * Responsible for deserializing data stored in disk and create a UserList object consisting of all the users. 
+	 * @return A userlist after deserializing the data. Consists of all application data.
+	 */
 	public static UserList load(){
 		UserList UL = null;
 		try {

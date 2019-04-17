@@ -50,9 +50,17 @@ public class NonAdminController implements Initializable{
 		user=u;
 		switchpage=new SwitchPage();
 	}
+	/**
+	 * Logout button to go back to the login screen. 
+	 * @param event
+	 * @throws Exception
+	 */
 	public void logout(ActionEvent event) throws Exception {
 		switchpage.showScreen("/view/login.fxml", event);
 	}
+	/* (non-Javadoc)
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ObservableList<Album> data = FXCollections.observableArrayList(user.getAlbums());
 		name.setCellValueFactory(new PropertyValueFactory<Album, String>("name"));
@@ -60,6 +68,9 @@ public class NonAdminController implements Initializable{
 		dates.setCellValueFactory(new PropertyValueFactory<Album, String>("dateRange"));
 		table.setItems(data);
 	}
+	/**
+	 * Callback function to create an album. Checks for the legitimacy of the album name in the textbox. 
+	 */
 	public void createAlbum() {
 		String name = createAlbumText.getText();
 		createAlbumText.setText("");
@@ -78,10 +89,16 @@ public class NonAdminController implements Initializable{
 		DataSaver.save(userlist);
 		setTable();
 	}
+	/**
+	 * Sets the observable list's view
+	 */
 	private void setTable(){
 		ObservableList<Album> data = FXCollections.observableArrayList(user.getAlbums());
 		table.setItems(data);
 	}
+	/**
+	 * 
+	 */
 	public void deleteAlbum() {
 		Album todelete = table.getSelectionModel().getSelectedItem();
 		if(todelete==null) {
@@ -93,6 +110,9 @@ public class NonAdminController implements Initializable{
 		DataSaver.save(userlist);
 		setTable();
 	}
+	/**
+	 * Renames the album. Checks for the legitimacy of the name. 
+	 */
 	public void renameAlbum() {
 		Album torename=table.getSelectionModel().getSelectedItem();
 		String newname = renamealbum.getText();
@@ -107,6 +127,11 @@ public class NonAdminController implements Initializable{
 		setTable();
 		table.refresh();
 	}
+	/**
+	 * Shift's the scene's view to the OpenAlbum page.
+	 * @param event
+	 * @throws Exception
+	 */
 	public void openAlbum(ActionEvent event) throws Exception {
 		Album album=table.getSelectionModel().getSelectedItem();
 		if(album==null) {
@@ -117,11 +142,20 @@ public class NonAdminController implements Initializable{
 		OpenAlbumController.initializeAlbum(userlist, album,user);
 		switchpage.showScreen("/view/openAlbum.fxml", event);
 	}
+	/**
+	 * Shift the scene's view to the SearchPhotos page
+	 * @param event
+	 * @throws Exception
+	 */
 	public void searchPhotos(ActionEvent event) throws Exception {
 		SearchPhotosController.initializeAlbums(userlist, user.getAlbums(),user);
 		switchpage.showScreen("/view/searchPhotos.fxml", event);
 	}
-	public void showAlert(String text) {
+	/**
+	 * Helper method to show a warning dialog box.
+	 * @param text
+	 */
+	private void showAlert(String text) {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setContentText(text);
 		alert.showAndWait();

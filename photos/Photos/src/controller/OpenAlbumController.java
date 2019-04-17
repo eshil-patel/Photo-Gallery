@@ -108,10 +108,14 @@ public class OpenAlbumController implements Initializable{
 	private Button addPresetTagButton;
 	@FXML
 	private Button deletePresetTagButton;
+	/**
+	 * Callback function for the case when the user clicks on an object on the list of preset tag names. 
+	 * @param arg0
+	 */
 	@FXML public void fillTagName(MouseEvent arg0){
 		addTagText1.setText(tagNames.getSelectionModel().getSelectedItem());
 	}
-	@FXML public void 
+	
 	
 	public static void initializeAlbum(UserList UL,Album a,User u) {
 		ULL=UL;
@@ -120,7 +124,11 @@ public class OpenAlbumController implements Initializable{
 		switchpage=new SwitchPage();
 	}
 	
-	//UPDATES THE GRID IMAGES
+	//
+	/**
+	 * UPDATES THE GRID IMAGES. Sets the scroll view. 
+	 * @throws FileNotFoundException
+	 */
 	public void loadImages() throws FileNotFoundException{
 	System.out.println(currentImg);
 	System.out.println(album.toString());
@@ -158,27 +166,12 @@ public class OpenAlbumController implements Initializable{
 			displayImg();
 		}
 	}
-	public void nextImg(ActionEvent event) throws FileNotFoundException {
-		currentImg++;
-		if (currentImg >= album.getPhotos().size()){
-			showAlert("Reached end of the album!");
-			currentImg--;
-			return;
-		}
-		loadImages();
-		displayImg();
-	}
-	public void prevImg(ActionEvent event) throws FileNotFoundException {
-		currentImg--;
-		if (currentImg < 0){
-			showAlert("Reached beginning of the album!");
-			currentImg++;
-			return;
-		}
-		loadImages();
-		displayImg();
-	}
-	//UPDATES IMAGE VIEW AND ALSO SAVES DATA!!
+
+	//
+	/**
+	 * UPDATES IMAGE VIEW AND ALSO SAVES DATA!! Is responsible for the constant saving done in this page. It also displays the image in the ImageView and updates the values for the caption, date and tags. 
+	 * @throws FileNotFoundException
+	 */
 	public void displayImg() throws FileNotFoundException{
 		System.out.println(currentImg);
 		System.out.println(album.toString());
@@ -197,10 +190,49 @@ public class OpenAlbumController implements Initializable{
 		
 		
 	}
+	/**
+	 * Callback function of the next button. Scrolls through the list of images in the album. 
+	 * @param event
+	 * @throws FileNotFoundException
+	 */
+	public void nextImg(ActionEvent event) throws FileNotFoundException {
+		currentImg++;
+		if (currentImg >= album.getPhotos().size()){
+			showAlert("Reached end of the album!");
+			currentImg--;
+			return;
+		}
+		loadImages();
+		displayImg();
+	}
+	/**
+	 * Callback function of the previous button. Scrolls through the list of images in the album. 
+	 * @param event
+	 * @throws FileNotFoundException
+	 */
+	public void prevImg(ActionEvent event) throws FileNotFoundException {
+		currentImg--;
+		if (currentImg < 0){
+			showAlert("Reached beginning of the album!");
+			currentImg++;
+			return;
+		}
+		loadImages();
+		displayImg();
+	}
+	/**
+	 * Callback function for the back button. Goes to the previous page, the NonAdminController. 
+	 * @param event
+	 * @throws Exception
+	 */
 	public void back(ActionEvent event) throws Exception {
 		NonAdminController.initializePage(ULL, user);
 		switchpage.showScreen("/view/NonAdminPage.fxml", event);
 	}
+	/**
+	 * Updates the caption of the image. Also calls on displayImg to update the state. 
+	 * @param event
+	 */
 	public void caption(ActionEvent event){
 		album.getPhotos().get(currentImg).setCaption(captionText.getText());
 		Photo i = album.getPhotos().get(currentImg);
@@ -212,6 +244,10 @@ public class OpenAlbumController implements Initializable{
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * Adds a tag to the Photo object and also updates the list accordingly.
+	 * @param event
+	 */
 	public void addTag(ActionEvent event){
 		if (addTagText1.getText().length()==0 || addTagText2.getText().length()==0 ){
 			showAlert("Tag values must be non-null!");
@@ -231,6 +267,10 @@ public class OpenAlbumController implements Initializable{
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * 
+	 * @param event
+	 */
 	public void removeTag(ActionEvent event){
 		Tag t = new Tag(addTagText1.getText(),addTagText2.getText());
 		if (!album.getPhotos().get(currentImg).hasTag(t)){
@@ -247,6 +287,9 @@ public class OpenAlbumController implements Initializable{
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * @param event
+	 */
 	public void copyAlbum(ActionEvent event){
 		if (currentImg == -1){
 			showAlert("No image available");
@@ -270,6 +313,9 @@ public class OpenAlbumController implements Initializable{
 			}
 		}
 	}
+	/**
+	 * @param event
+	 */
 	public void moveAlbum(ActionEvent event){
 		if (currentImg == -1){
 			showAlert("No image available");
@@ -297,6 +343,10 @@ public class OpenAlbumController implements Initializable{
 			}
 		}
 	}
+	/**
+	 * @param event
+	 * @throws FileNotFoundException
+	 */
 	public void addPhotos(ActionEvent event) throws FileNotFoundException{
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Open Resource File");
@@ -317,6 +367,10 @@ public class OpenAlbumController implements Initializable{
 		loadImages();
 		displayImg();
 	}
+	/**
+	 * @param event
+	 * @throws FileNotFoundException
+	 */
 	public void removePhotos(ActionEvent event) throws FileNotFoundException{
 		if (album.getNumPhotos() == 0){
 			showAlert("No photos to remove!");
@@ -330,6 +384,9 @@ public class OpenAlbumController implements Initializable{
 		displayImg();
 	}
 	
+	/**
+	 * 
+	 */
 	public void loadTags(){
 		if (album.getNumPhotos()!=0 && currentImg < album.getNumPhotos()){
 			ObservableList<Tag> data = FXCollections.observableArrayList(album.getPhotos().get(currentImg).getTags());
@@ -338,10 +395,16 @@ public class OpenAlbumController implements Initializable{
 			tagList.setItems(data);
 		}
 	}
+	/**
+	 * 
+	 */
 	public void loadPresetTags(){
 		ObservableList<String> list = FXCollections.observableArrayList(album.getPresetTagNames());
 		tagNames.setItems(list);
 	}
+	/**
+	 * @param event
+	 */
 	public void addPresetTag(ActionEvent event){
 		if(addPresetTagText.getText().isEmpty()){
 			showAlert("Tag name must be nonempty!");
@@ -360,6 +423,9 @@ public class OpenAlbumController implements Initializable{
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * @param event
+	 */
 	public void deletePresetTag(ActionEvent event){
 		if (!tagNames.getSelectionModel().getSelectedItem().isEmpty()){
 			album.deletePresetTagName(tagNames.getSelectionModel().getSelectedItem());
@@ -373,6 +439,9 @@ public class OpenAlbumController implements Initializable{
 		}
 		
 	}
+	/* (non-Javadoc)
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
@@ -388,6 +457,9 @@ public class OpenAlbumController implements Initializable{
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * @param text
+	 */
 	public void showAlert(String text) {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setContentText(text);
