@@ -68,10 +68,18 @@ public class SearchPhotosController {
 		user=u;
 		switchpage=new SwitchPage();
 	}
+	/**Callback to the back button. Goes to previous page 
+	 * @param event
+	 * @throws Exception
+	 */
 	public void back(ActionEvent event) throws Exception {
 		NonAdminController.initializePage(userlist, user);
 		switchpage.showScreen("/view/NonAdminPage.fxml", event);
 	}
+	/**Callback to the search by date button. Searches your photos by the date range inputted
+	 * @throws ParseException
+	 * @throws FileNotFoundException
+	 */
 	public void searchByDate() throws ParseException, FileNotFoundException {
 		System.out.println("Got into the method im testing");
 		String start=startDate.getText();
@@ -89,6 +97,10 @@ public class SearchPhotosController {
 		newAlbum=photosBySearch;
 		setGridpane(photosBySearch);
 	}
+	/**Private helper used to check if the dates are valid dates
+	 * @param input
+	 * @return
+	 */
 	private boolean areDates(String[] input) {
 		if(input.length!=3) {
 			return false;
@@ -101,12 +113,18 @@ public class SearchPhotosController {
 		}
 		return true;
 	}
+	/**Shows alert with message if there is a user error
+	 * @param text
+	 */
 	public void showAlert(String text) {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setContentText(text);
 		alert.showAndWait();
 		return;
 	}
+	/**Callback to the search by tag button. Searches the photos by the tag value(s) inputted
+	 * @throws FileNotFoundException
+	 */
 	public void searchByTag() throws FileNotFoundException {
 		String t1=tag1.getText().trim();
 		String v1=val1.getText().trim();
@@ -152,6 +170,10 @@ public class SearchPhotosController {
 		setGridpane(searchResults);
 	}
 	
+	/**Sets the gridpane of the photos that were returned by the search
+	 * @param searchResults
+	 * @throws FileNotFoundException
+	 */
 	public void setGridpane(ArrayList<Photo> searchResults) throws FileNotFoundException {
 		grid.getChildren().removeAll(grid.getChildren());
 		System.out.println(searchResults.size());
@@ -182,6 +204,9 @@ public class SearchPhotosController {
 		}
 		scrollpane.setContent(grid);
 	}
+	/**Callback for the create album button. Creates a new album from the search results 
+	 * 
+	 */
 	public void createAlbum() {
 		System.out.println("got in here and now im in buisness");
 		String albumName=albumname.getText();
