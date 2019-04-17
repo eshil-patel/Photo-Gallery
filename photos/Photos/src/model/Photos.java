@@ -1,3 +1,6 @@
+/**
+ * @author Imrhankhan Shajahan & Eshil Patel
+ */
 package model;
 
 import javafx.application.Application;
