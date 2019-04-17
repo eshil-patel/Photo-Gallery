@@ -245,7 +245,7 @@ public class OpenAlbumController implements Initializable{
 		}
 	}
 	/**
-	 * Adds a tag to the Photo object and also updates the list accordingly.
+	 * Adds a tag to the Photo object and also updates the tag list accordingly.
 	 * @param event
 	 */
 	public void addTag(ActionEvent event){
@@ -268,7 +268,7 @@ public class OpenAlbumController implements Initializable{
 		}
 	}
 	/**
-	 * 
+	 * Callback function of the remove tag button. Removes the Tag object associated with the photo element
 	 * @param event
 	 */
 	public void removeTag(ActionEvent event){
@@ -288,6 +288,7 @@ public class OpenAlbumController implements Initializable{
 		}
 	}
 	/**
+	 * Callback function of the CopyAlbum button. Adds the photo object to the specified album. Checks for the legitimacy of said album. 
 	 * @param event
 	 */
 	public void copyAlbum(ActionEvent event){
@@ -314,6 +315,7 @@ public class OpenAlbumController implements Initializable{
 		}
 	}
 	/**
+	 * Callback function of the MoveAlbum button. Adds the photo object to the specified album and removes it from the current one. Checks for the legitimacy of said album.
 	 * @param event
 	 */
 	public void moveAlbum(ActionEvent event){
@@ -344,6 +346,7 @@ public class OpenAlbumController implements Initializable{
 		}
 	}
 	/**
+	 * Invokes the FileChooser and allows the user to add a photo from their system. 
 	 * @param event
 	 * @throws FileNotFoundException
 	 */
@@ -368,6 +371,7 @@ public class OpenAlbumController implements Initializable{
 		displayImg();
 	}
 	/**
+	 * Callback function of the RemovePhotos button. Removes the selected image from the album. Saves the state and updates the page as well.
 	 * @param event
 	 * @throws FileNotFoundException
 	 */
@@ -385,7 +389,7 @@ public class OpenAlbumController implements Initializable{
 	}
 	
 	/**
-	 * 
+	 * Method to load the tags in the taglist. 
 	 */
 	public void loadTags(){
 		if (album.getNumPhotos()!=0 && currentImg < album.getNumPhotos()){
@@ -395,7 +399,7 @@ public class OpenAlbumController implements Initializable{
 			tagList.setItems(data);
 		}
 	}
-	/**
+	/**Method to load the preset tag list in the OpenAlbum Page. 
 	 * 
 	 */
 	public void loadPresetTags(){
@@ -403,6 +407,7 @@ public class OpenAlbumController implements Initializable{
 		tagNames.setItems(list);
 	}
 	/**
+	 * Callback function of addPresetTag button. Adds a preset Tag name so the user can choose from it. 
 	 * @param event
 	 */
 	public void addPresetTag(ActionEvent event){
@@ -424,6 +429,7 @@ public class OpenAlbumController implements Initializable{
 		}
 	}
 	/**
+	 * Callback function of the Delete Preset Tag Button. Delets the selected preset tag. 
 	 * @param event
 	 */
 	public void deletePresetTag(ActionEvent event){
@@ -458,6 +464,7 @@ public class OpenAlbumController implements Initializable{
 		}
 	}
 	/**
+	 * Helper method to display alert dialogs. 
 	 * @param text
 	 */
 	public void showAlert(String text) {
