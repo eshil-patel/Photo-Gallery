@@ -33,16 +33,33 @@ public class LoginController {
 	private TextField username;
 	@FXML
 	private Button loginbutton;
+	/**
+	 * A method to deal with user pressing enter at the textbox. 
+	 * @param ae Action Event
+	 * @throws Exception
+	 */
 	@FXML
 	public void onEnter(ActionEvent ae)throws Exception{
 		login(ae);
 	}
 	public static UserList UL;
 	public static SwitchPage switchpage;
+	/**
+	 * Starts the logincontroller page
+	 * @throws FileNotFoundException
+	 */
 	public void start() throws FileNotFoundException{
 		UL = DataSaver.load();
 		switchpage=new SwitchPage();
 	}
+	/**
+	 * Button handler method for "login" button
+	 * Checks whether the username is admin -> shows admin controller page and list of admins
+	 * 							      stock -> shows the nonadmin controller with the stock photos in an album
+	 * If neither, checks whether the user exists in userlist and logs in
+	 * @param event
+	 * @throws Exception
+	 */
 	public void login(ActionEvent event) throws Exception  {
 		String input=username.getText().trim();
 		username.setText("");
@@ -85,6 +102,10 @@ public class LoginController {
 			return;
 		}
 	}
+	/**
+	 * Used in the callback function of the login button. Used for finding the absolute path for the stock photos.
+	 * @return returns the list of Files and their paths. 
+	 */
 	public File[] getPhotoLocation() {
 		List<File> filepaths = new ArrayList<File>();
 		String workingDir = System.getProperty("user.dir");

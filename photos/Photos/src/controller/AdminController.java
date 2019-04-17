@@ -38,13 +38,30 @@ public class AdminController implements Initializable {
 	private TextField newUser;
 	public static UserList ULL;
 	public static SwitchPage switchpage;
+	
+	/**
+	 * A method dedicated to creating a UserList object
+	 * @param UL A UserList object consisting of all the users -> primary object that permeates through all other controllers and is also the object being serialized. Consists of all application information.
+	 * @return
+	 * @see UserList
+	 */
 	public static void initializeUserList(UserList UL){
 		ULL=UL;
 		switchpage=new SwitchPage();
 	}
+	/**
+	 * Logs out of the admin page and diverts to the login page. 
+	 * @param event Event passed by the scene with the caller
+	 * @throws Exception
+	 */
 	public void logout(ActionEvent event) throws Exception{
 		switchpage.showScreen("/view/login.fxml", event);
 	}
+	/**
+	 * Method that creates a user specified by the user and the name they provide. 
+	 * @param 
+	 * @return 
+	 */
 	public void createUser() {
 		String name = newUser.getText();
 		if (name.length() == 0){
@@ -58,27 +75,30 @@ public class AdminController implements Initializable {
 		listUsers();
 		DataSaver.save(ULL);
 	}
+	/**
+	 * Method that deletes a User object from UserList
+	 * @param
+	 */
 	public void deleteUser() {
 		User m = (userlist.getSelectionModel().getSelectedItem());
 		ULL.deleteUser(m);
 		listUsers();
 		DataSaver.save(ULL);
 	}
-	public void logout() throws IOException {
-		Photos.changePane(2);
-	}
+	/**
+	 * Method that updates the observable list in the admin page.
+	 * 
+	 */
 	public void listUsers() {
 		userlist.setItems(FXCollections.observableArrayList(ULL.getList()));
 	}
-	public void test() {
-		System.out.println("I got into the admin controller");
-	}
+	/**
+	 * Method that is called when the scene switches to the admin page
+	 * @param arg0 Default parameters not used in this situation
+	 * @param arg1 Another default parameter not used
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		if(userlist.equals(null)) {
-			System.out.println("its null bro");
-		}
 		listUsers();
 	}
 	
