@@ -22,8 +22,8 @@ public class Photo implements Serializable{
 	private Date date;
 	private String Caption;
 	/**Constructor for photo
-	 * @param path
-	 * @param longdate
+	 * @param path filepath of photo
+	 * @param longdate date in long millisecond form 
 	 */
 	public Photo(String path,long longdate){
 		this.path = path;
@@ -32,8 +32,8 @@ public class Photo implements Serializable{
 		Caption = null;
 	}
 	/**Alternate constructor for photo
-	 * @param path
-	 * @param date
+	 * @param path filepath of the photo
+	 * @param date date of photo (data)
 	 */
 	public Photo(String path, Date date){
 		this.path = path;
@@ -66,13 +66,13 @@ public class Photo implements Serializable{
 		return Caption;
 	}
 	/**Set the caption for the photo
-	 * @param caption
+	 * @param caption-caption of the photo
 	 */
 	public void setCaption(String caption) {
 		Caption = caption;
 	}
 	/**Add tag to the photo 
-	 * @param m
+	 * @param m tag to add 
 	 */
 	public void addTags(Tag m){
 		if (Tags.contains(m)){
@@ -81,7 +81,7 @@ public class Photo implements Serializable{
 		Tags.add(m);
 	}
 	/**Remove tag from the photo
-	 * @param m
+	 * @param m tag to remove 
 	 */
 	public void removeTags(Tag m){
 		if (!(Tags.contains(m))){
@@ -97,7 +97,7 @@ public class Photo implements Serializable{
 		return Tags;
 	}
 	/**Check if the photo has specific tag 
-	 * @param m
+	 * @param m tag to check if it has 
 	 * @return
 	 */
 	public boolean hasTag(Tag m){
@@ -121,7 +121,7 @@ public class Photo implements Serializable{
 		return false;
 	}
 	/**set date of the photo
-	 * @param text
+	 * @param text date of photo
 	 */
 	public void setDate(String text) {
 		// TODO Auto-generated method stub

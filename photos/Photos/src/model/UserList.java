@@ -13,7 +13,7 @@ public class UserList implements Serializable{
 		UL = new ArrayList<User>();
 	}
 	/** Add user into the user list 
-	 * @param m
+	 * @param m User object 
 	 */
 	public void addUser(User m){
 		UL.add(m);
@@ -32,7 +32,7 @@ public class UserList implements Serializable{
 		return UL;
 	}
 	/**check if the userlist contains this user 
-	 * @param name
+	 * @param name- Name of user 
 	 * @return
 	 */
 	public boolean hasUser(String name) {
@@ -43,7 +43,7 @@ public class UserList implements Serializable{
 		return false;
 	}
 	/**get user from the list of users 
-	 * @param name
+	 * @param name Name of user 
 	 * @return
 	 */
 	public User getUser(String name) {
@@ -51,13 +51,13 @@ public class UserList implements Serializable{
 		return UL.get(UL.indexOf(t));
 	}
 	/**delete the user from the userlist 
-	 * @param name
+	 * @param name name of user 
 	 */
 	public void deleteUser(String name) {
 		UL.remove(new User(name));
 	}
 	/**alternate delete user from the userlist 
-	 * @param n
+	 * @param n User object 
 	 */
 	public void deleteUser(User n) {
 		UL.remove(n);
