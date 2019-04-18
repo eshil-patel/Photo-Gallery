@@ -134,4 +134,12 @@ public class Photo implements Serializable{
 	public String toString(){
 		return this.getPath();
 	}
+	public boolean hasLocation(){
+		for (Tag i: Tags){
+			if (i.getName().equals("Location") || i.getName().equals("location")){
+				return true;
+			}
+		}
+		return false;
+	}
 }

@@ -202,8 +202,7 @@ public class OpenAlbumController implements Initializable{
 			currentImg--;
 			return;
 		}
-		loadImages();
-		displayImg();
+		refresh();
 	}
 	/**
 	 * Callback function of the previous button. Scrolls through the list of images in the album. 
@@ -217,8 +216,7 @@ public class OpenAlbumController implements Initializable{
 			currentImg++;
 			return;
 		}
-		loadImages();
-		displayImg();
+		refresh();
 	}
 	/**
 	 * Callback function for the back button. Goes to the previous page, the NonAdminController. 
@@ -232,46 +230,50 @@ public class OpenAlbumController implements Initializable{
 	/**
 	 * Updates the caption of the image. Also calls on displayImg to update the state. 
 	 * @param event
+	 * @throws FileNotFoundException 
 	 */
-	public void caption(ActionEvent event){
+	public void caption(ActionEvent event) throws FileNotFoundException{
 		album.getPhotos().get(currentImg).setCaption(captionText.getText());
 		Photo i = album.getPhotos().get(currentImg);
 		captionText.setText("");
-		try {
-			displayImg();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		refresh();
 	}
 	/**
 	 * Adds a tag to the Photo object and also updates the tag list accordingly.
 	 * @param event
+	 * @throws FileNotFoundException 
 	 */
-	public void addTag(ActionEvent event){
+	public void addTag(ActionEvent event) throws FileNotFoundException{
 		if (addTagText1.getText().length()==0 || addTagText2.getText().length()==0 ){
 			showAlert("Tag values must be non-null!");
+		}
+		if (currentImg == -1 ){
+			showAlert("No image selected!");
+			addTagText1.setText("");
+			addTagText2.setText("");
+			return;
 		}
 		Tag t = new Tag(addTagText1.getText(),addTagText2.getText());
 		if (album.getPhotos().get(currentImg).hasTag(t)){
 			showAlert("Already has those tags");
 			return;
 		}
+		if (album.getPhotos().get(currentImg).hasLocation()){
+			showAlert("Already has a Location tag!");
+			return;
+		}
+		
 		album.getPhotos().get(currentImg).addTags(t);
 		addTagText1.setText("");
 		addTagText2.setText("");
-		try {
-			displayImg();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		refresh();
 	}
 	/**
 	 * Callback function of the remove tag button. Removes the Tag object associated with the photo element
 	 * @param event
+	 * @throws FileNotFoundException 
 	 */
-	public void removeTag(ActionEvent event){
+	public void removeTag(ActionEvent event) throws FileNotFoundException{
 		Tag t = new Tag(addTagText1.getText(),addTagText2.getText());
 		if (!album.getPhotos().get(currentImg).hasTag(t)){
 			showAlert("Tags not found");
@@ -280,18 +282,14 @@ public class OpenAlbumController implements Initializable{
 		album.getPhotos().get(currentImg).removeTags(t);
 		addTagText1.setText("");
 		addTagText2.setText("");
-		try {
-			displayImg();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		refresh();
 	}
 	/**
 	 * Callback function of the CopyAlbum button. Adds the photo object to the specified album. Checks for the legitimacy of said album. 
 	 * @param event
+	 * @throws FileNotFoundException 
 	 */
-	public void copyAlbum(ActionEvent event){
+	public void copyAlbum(ActionEvent event) throws FileNotFoundException{
 		if (currentImg == -1){
 			showAlert("No image available");
 			return;
@@ -305,20 +303,15 @@ public class OpenAlbumController implements Initializable{
 			Album j = user.getAlbum(albumName);
 			j.addPhoto(i);
 			copyAlbumText.setText("");
-			try {
-				displayImg();
-				loadImages();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			refresh();
 		}
 	}
 	/**
 	 * Callback function of the MoveAlbum button. Adds the photo object to the specified album and removes it from the current one. Checks for the legitimacy of said album.
 	 * @param event
+	 * @throws FileNotFoundException 
 	 */
-	public void moveAlbum(ActionEvent event){
+	public void moveAlbum(ActionEvent event) throws FileNotFoundException{
 		if (currentImg == -1){
 			showAlert("No image available");
 			return;
@@ -336,13 +329,7 @@ public class OpenAlbumController implements Initializable{
 			if (currentImg == album.getNumPhotos()){
 				currentImg--;
 			}
-			try {
-				displayImg();
-				loadImages();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			refresh();
 		}
 	}
 	/**
@@ -361,14 +348,14 @@ public class OpenAlbumController implements Initializable{
 			showAlert("No file entered!");
 			return;
 		}
-//		System.out.println(file.getName());
-//		System.out.println(file.getAbsolutePath());
+		if (currentImg == -1){
+			currentImg = 0;
+		}
 		String fp = file.getAbsolutePath();
 //		System.out.println(fp);
 		Photo n = new Photo(fp, file.lastModified());
 		album.addPhoto(n);
-		loadImages();
-		displayImg();
+		refresh();
 	}
 	/**
 	 * Callback function of the RemovePhotos button. Removes the selected image from the album. Saves the state and updates the page as well.
@@ -384,15 +371,14 @@ public class OpenAlbumController implements Initializable{
 		if (currentImg != 0){
 			currentImg--;
 		}
-		loadImages();
-		displayImg();
+		refresh();
 	}
 	
 	/**
 	 * Method to load the tags in the taglist. 
 	 */
 	public void loadTags(){
-		if (album.getNumPhotos()!=0 && currentImg < album.getNumPhotos()){
+		if (album.getNumPhotos()!=0 && currentImg < album.getNumPhotos() && currentImg >= 0){
 			ObservableList<Tag> data = FXCollections.observableArrayList(album.getPhotos().get(currentImg).getTags());
 			nameCol.setCellValueFactory(new PropertyValueFactory<Tag, String>("name"));
 			valueCol.setCellValueFactory(new PropertyValueFactory<Tag, String>("value"));
@@ -445,6 +431,12 @@ public class OpenAlbumController implements Initializable{
 		}
 		
 	}
+	public void refresh() throws FileNotFoundException{
+
+		loadImages();
+		displayImg();
+	}
+	
 	/* (non-Javadoc)
 	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
 	 */
