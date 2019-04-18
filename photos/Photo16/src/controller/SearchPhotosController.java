@@ -210,7 +210,8 @@ public class SearchPhotosController {
 	public void createAlbum() {
 //		System.out.println("got in here and now im in buisness");
 		String albumName=albumname.getText();
-		if(albumName==null){
+		albumname.setText("");
+		if(albumName.equals("")){
 			showAlert("No name given");
 			return;
 		}
